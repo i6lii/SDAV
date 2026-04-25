@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Visit — DefenseX</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo">
+  <img src="https://i.pinimg.com/originals/29/32/4a/29324aa651d77bd8318fb9032852c162.jpg" 
+       alt="DefenseX Logo" 
+       class="logo-img">
+
+  <div class="logo-text">
+    <span class="logo-main">DefenseX</span>
+    <span class="logo-sub">Defense Capabilities Platform</span>
+  </div>
+</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#equipment">Equipment</a></li>
+        <li><a href="bookings.html">My Bookings</a></li>
+        <li><a href="booking.html" class="active">Book a Visit</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="booking-page">
+    <div class="booking-wrap">
+
+      <div class="section-header animate-fade-up">
+        <div class="section-tag">Schedule a Visit</div>
+        <h1 class="section-title">Book Your Appointment</h1>
+        <p class="section-desc">Fill in your details and choose the equipment and time slot for your visit.</p>
+      </div>
+
+      <div class="booking-card animate-fade-up animate-delay-1" id="bookingCard">
+        <div class="info-block-title" id="pageTitle">📋 Booking Form</div>
+
+        <form id="bookingForm" novalidate>
+
+          <div class="info-block-title">Visitor Information</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="visitorName">Full Name <span>*</span></label>
+              <input type="text" id="visitorName" class="form-control" placeholder="e.g. Yara Khalid" />
+              <div class="form-error" id="visitorNameErr"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="phoneNumber">Phone Number <span>*</span></label>
+              <input type="tel" id="phoneNumber" class="form-control" placeholder="e.g. 0512345678" />
+              <div class="form-error" id="phoneNumberErr"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="nationality">Nationality <span class="text-muted">(Optional)</span></label>
+            <select id="nationality" class="form-control">
+              <option value="">— Select Nationality —</option>
+              <option value="SA">🇸🇦 Saudi Arabia</option>
+              <option value="AE">🇦🇪 UAE</option>
+              <option value="KW">🇰🇼 Kuwait</option>
+              <option value="QA">🇶🇦 Qatar</option>
+              <option value="BH">🇧🇭 Bahrain</option>
+              <option value="OM">🇴🇲 Oman</option>
+              <option value="JO">🇯🇴 Jordan</option>
+              <option value="EG">🇪🇬 Egypt</option>
+              <option value="US">🇺🇸 United States</option>
+              <option value="GB">🇬🇧 United Kingdom</option>
+              <option value="FR">🇫🇷 France</option>
+              <option value="DE">🇩🇪 Germany</option>
+              <option value="OTHER">🌍 Other</option>
+            </select>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="info-block-title">Select Equipment</div>
+          <div class="form-group">
+            <label class="form-label" for="equipSelect">Equipment to View <span>*</span></label>
+            <select id="equipSelect" class="form-control" onchange="onEquipChange()">
+              <option value="">— Choose Equipment —</option>
+              <optgroup label="✈️ Air Force">
+                <option value="1" data-type="air"   data-cat="Fighter Aircraft">F-15 Eagle</option>
+                <option value="2" data-type="air"   data-cat="Transport Aircraft">C-130 Hercules</option>
+                <option value="3" data-type="air"   data-cat="Air Defense">Patriot PAC-3</option>
+              </optgroup>
+              <optgroup label="🚛 Army">
+                <option value="4" data-type="land"  data-cat="Main Battle Tank">M1A2 Abrams</option>
+                <option value="5" data-type="land"  data-cat="IFV">M2 Bradley</option>
+                <option value="6" data-type="land"  data-cat="Howitzer">M109 Paladin</option>
+              </optgroup>
+              <optgroup label="🚢 Navy">
+                <option value="7" data-type="naval" data-cat="Frigate">Frigate F-200</option>
+                <option value="8" data-type="naval" data-cat="Patrol Boat">Fast Patrol Boat</option>
+                <option value="9" data-type="naval" data-cat="Submarine">Attack Submarine</option>
+              </optgroup>
+            </select>
+            <div class="form-error" id="equipSelectErr"></div>
+            <div class="card-specs hidden" id="equipPreview">
+              <span class="spec-chip" id="equipChip"></span>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="info-block-title">Date & Time</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="visitDate">Visit Date <span>*</span></label>
+              <input type="date" id="visitDate" class="form-control" onchange="onDateChange()" />
+              <div class="form-error" id="visitDateErr"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="visitTime">Time Slot <span>*</span></label>
+              <select id="visitTime" class="form-control">
+                <option value="">— Select a date first —</option>
+              </select>
+              <div class="form-error" id="visitTimeErr"></div>
+            </div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="hidden" id="summaryWrap">
+            <div class="info-block-title">Booking Summary</div>
+            <div class="info-block">
+              <table class="specs-table" id="summaryTable"></table>
+            </div>
+          </div>
+
+          <div class="flex-between gap-16">
+            <p class="text-muted" Your data is secure</p>
+            <button type="submit" class="btn btn-primary" id="submitBtn">📅 Confirm Booking</button>
+          </div>
+
+        </form>
+
+        <div class="hidden" id="successScreen">
+          <div class="empty-state">
+            <div class="empty-icon">✅</div>
+            <h3>Booking Confirmed!</h3>
+            <p class="text-muted">We'll contact you within 24 hours to confirm your appointment.</p>
+            <p class="section-tag" id="bookingCode" style="margin-top:16px"></p>
+            <div class="flex-center gap-12" style="margin-top:24px">
+              <a href="bookings.html" class="btn btn-ghost">📋 My Bookings</a>
+              <button class="btn btn-secondary" onclick="resetForm()">➕ New Booking</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="app.js"></script>
+  <script>
+    const EQUIP = {
+      1:['F-15 Eagle','Fighter Aircraft','air'],
+      2:['C-130 Hercules','Transport Aircraft','air'],
+      3:['Patriot PAC-3','Air Defense','air'],
+      4:['M1A2 Abrams','Main Battle Tank','land'],
+      5:['M2 Bradley','IFV','land'],
+      6:['M109 Paladin','Howitzer','land'],
+      7:['Frigate F-200','Frigate','naval'],
+      8:['Fast Patrol Boat','Patrol Boat','naval'],
+      9:['Attack Submarine','Submarine','naval']
+    };
+    const BRANCH  = {air:'Air Force', land:'Army', naval:'Navy'};
+    const BADGE   = {air:'badge-air', land:'badge-land', naval:'badge-naval'};
+    const SLOTS   = ['08:00','09:30','11:00','12:30','14:00','15:30','17:00'];
+    const BUSY    = ['09:30','14:00'];
+    const NAT     = {SA:'Saudi Arabia',AE:'UAE',KW:'Kuwait',QA:'Qatar',BH:'Bahrain',OM:'Oman',JO:'Jordan',EG:'Egypt',US:'United States',GB:'United Kingdom',FR:'France',DE:'Germany',OTHER:'Other'};
+
+    const $  = id => document.getElementById(id);
+    const fv = id => $(id)?.value.trim();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      $('visitDate').min = new Date().toISOString().split('T')[0];
+      const p = new URLSearchParams(location.search);
+      if (p.get('equip')) { $('equipSelect').value = p.get('equip'); onEquipChange(); }
+      if (p.get('edit'))  loadForEdit(p.get('edit'));
+
+      document.querySelectorAll('.form-control').forEach(el => {
+        el.addEventListener('blur',   () => validate(el));
+        el.addEventListener('input',  () => { if (el.classList.contains('error')) validate(el); updateSummary(); });
+        el.addEventListener('change', () => updateSummary());
+      });
+    });
+
+    function onEquipChange() {
+      const id = $('equipSelect').value;
+      if (!id) { $('equipPreview').classList.add('hidden'); return; }
+      const [name, cat, type] = EQUIP[id];
+      $('equipChip').textContent = `${name} · ${cat} · ${BRANCH[type]}`;
+      $('equipChip').className   = 'spec-chip ' + BADGE[type];
+      $('equipPreview').classList.remove('hidden');
+      updateSummary();
+    }
+
+    function onDateChange() {
+      const sel = $('visitTime');
+      sel.innerHTML = '<option value="">— Select a time slot —</option>';
+      SLOTS.forEach(t => {
+        const o = Object.assign(document.createElement('option'), {value: t, textContent: fmt(t) + (BUSY.includes(t) ? ' (Unavailable)' : ''), disabled: BUSY.includes(t)});
+        sel.appendChild(o);
+      });
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const vals = [fv('visitorName'), fv('phoneNumber'), $('equipSelect').value, $('visitDate').value, $('visitTime').value];
+      const ok   = vals.every(Boolean);
+      $('summaryWrap').classList.toggle('hidden', !ok);
+      if (!ok) return;
+      const nat = $('nationality').value;
+      $('summaryTable').innerHTML = [
+        ['Name',      fv('visitorName')],
+        ['Phone',     fv('phoneNumber')],
+        ['Nationality', nat ? (NAT[nat] || nat) : '—'],
+        ['Equipment', EQUIP[$('equipSelect').value]?.[0] || '—'],
+        ['Date',      fmtDate($('visitDate').value)],
+        ['Time',      fmt($('visitTime').value)]
+      ].map(([k,v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+    }
+
+    function validate(el) {
+      const v = el.value.trim(), id = el.id;
+      let msg = '';
+      if (id === 'visitorName')  msg = !v ? 'Name is required' : v.length < 3 ? 'Min. 3 characters' : '';
+      if (id === 'phoneNumber')  msg = !v ? 'Phone is required' : !/^\+?\d{7,13}$/.test(v.replace(/[\s\-]/g,'')) ? 'Enter a valid phone number' : '';
+      if (id === 'equipSelect')  msg = !v ? 'Please select equipment' : '';
+      if (id === 'visitDate')    msg = !v ? 'Date is required' : '';
+      if (id === 'visitTime')    msg = !v ? 'Time slot is required' : '';
+      el.classList.toggle('error', !!msg);
+      const e = $(id + 'Err');
+      if (e) { e.textContent = msg; e.classList.toggle('show', !!msg); }
+      return !msg;
+    }
+
+    $('bookingForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const ok = ['visitorName','phoneNumber','equipSelect','visitDate','visitTime'].every(id => validate($(id)));
+      if (!ok) { toast('Please fix the errors in the form.', 'error'); return; }
+      const btn = $('submitBtn');
+      btn.textContent = '⏳ Saving...'; btn.disabled = true;
+      setTimeout(() => {
+        const b = {id: uid(), name: fv('visitorName'), phone: fv('phoneNumber'), nationality: $('nationality').value||null, equipId: +$('equipSelect').value, date: $('visitDate').value, time: $('visitTime').value, notes: fv('visitNotes'), status:'confirmed', created: new Date().toISOString()};
+        const s = JSON.parse(localStorage.getItem('defensex_bookings')||'[]');
+        s.push(b); localStorage.setItem('defensex_bookings', JSON.stringify(s));
+        $('bookingForm').classList.add('hidden');
+        $('bookingCode').textContent = 'Booking ID: DX-' + b.id.toUpperCase().slice(-6);
+        $('successScreen').classList.remove('hidden');
+        toast('🎉 Booking confirmed!', 'success');
+      }, 1400);
+    });
+
+    function resetForm() {
+      $('bookingForm').reset(); $('bookingForm').classList.remove('hidden');
+      $('successScreen').classList.add('hidden'); $('equipPreview').classList.add('hidden');
+      $('summaryWrap').classList.add('hidden');
+      $('visitTime').innerHTML = '<option value="">— Select a date first —</option>';
+      document.querySelectorAll('.form-control.error').forEach(el => el.classList.remove('error'));
+      document.querySelectorAll('.form-error.show').forEach(el => el.classList.remove('show'));
+      $('submitBtn').textContent = '📅 Confirm Booking'; $('submitBtn').disabled = false;
+    }
+
+    function loadForEdit(editId) {
+      const b = JSON.parse(localStorage.getItem('defensex_bookings')||'[]').find(x => x.id === editId);
+      if (!b) return;
+      $('pageTitle').textContent = '✏️ Edit Booking'; $('submitBtn').textContent = '💾 Save Changes';
+      $('visitorName').value = b.name; $('phoneNumber').value = b.phone;
+      $('nationality').value = b.nationality||''; $('equipSelect').value = b.equipId;
+      $('visitDate').value = b.date; $('visitNotes').value = b.notes||'';
+      onEquipChange(); onDateChange();
+      setTimeout(() => { $('visitTime').value = b.time; updateSummary(); }, 50);
+    }
+
+    function fmt(t) {
+      if (!t) return '—';
+      const [h,m] = t.split(':').map(Number);
+      return `${h%12||12}:${String(m).padStart(2,'0')} ${h<12?'AM':'PM'}`;
+    }
+    function fmtDate(d) {
+      return d ? new Date(d+'T00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : '—';
+    }
+    function uid()  { return Date.now().toString(36) + Math.random().toString(36).substr(2,5); }
+    function toast(msg, type='success') {
+      const t = Object.assign(document.createElement('div'), {className:`toast toast-${type}`, textContent:msg});
+      $('toastContainer').appendChild(t);
+      requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+      setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3200);
+    }
+  </script>
+
+</body>
+</html>
