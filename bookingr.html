@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حجز زيارة — DefenseX</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="booking-header">
+  <div class="header-brand">
+    <div class="header-badge">SDAV</div>
+    <div class="header-title">
+      DefenseX
+      <small data-ar="منصة الاستعراض الدفاعي" data-en="Defense Capabilities Platform">منصة الاستعراض الدفاعي</small>
+    </div>
+  </div>
+  <ul class="header-nav">
+    <li><a href="index.html"   data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+    <li><a href="details.html" data-ar="التفاصيل" data-en="Details">التفاصيل</a></li>
+    <li><a href="bookingr.html" class="active" data-ar="حجز موعد" data-en="Book a Visit">حجز موعد</a></li>
+  </ul>
+  <div class="lang-toggle">
+    <button class="lang-opt active" onclick="setLang('ar')">عربي</button>
+    <button class="lang-opt"        onclick="setLang('en')">EN</button>
+  </div>
+</header>
+
+<section class="booking-hero">
+  <div class="booking-hero-label">📅 <span data-ar="جدولة زيارة" data-en="Schedule a Visit">جدولة زيارة</span></div>
+  <h1 data-ar="احجز موعدك" data-en="Book Your Appointment">احجز موعدك</h1>
+  <p  data-ar="أدخل بياناتك واختر المعدة والوقت المناسب لزيارتك." data-en="Fill in your details and choose the equipment and time slot for your visit.">أدخل بياناتك واختر المعدة والوقت المناسب لزيارتك.</p>
+</section>
+
+<div class="steps-bar">
+  <div class="step done">
+    <div class="step-circle">✓</div>
+    <div class="step-label" data-ar="اختر المعدة" data-en="Select Equipment">اختر المعدة</div>
+  </div>
+  <div class="step active">
+    <div class="step-circle">2</div>
+    <div class="step-label" data-ar="بيانات الحجز" data-en="Booking Details">بيانات الحجز</div>
+  </div>
+  <div class="step">
+    <div class="step-circle">3</div>
+    <div class="step-label" data-ar="التأكيد" data-en="Confirmation">التأكيد</div>
+  </div>
+</div>
+
+<div class="booking-wrapper">
+
+  <!-- بطاقة الفورم -->
+  <div class="booking-card">
+    <div class="card-head">
+      <div class="card-head-icon">📋</div>
+      <div>
+        <h2 data-ar="نموذج الحجز"                              data-en="Booking Form">نموذج الحجز</h2>
+        <p  data-ar="يُرجى تعبئة جميع الحقول المطلوبة لتأكيد زيارتك." data-en="Please fill in all required fields to confirm your visit.">يُرجى تعبئة جميع الحقول المطلوبة لتأكيد زيارتك.</p>
+      </div>
+    </div>
+
+    <div class="card-body">
+
+      <div class="form-section-title">👤 <span data-ar="بيانات الزائر" data-en="Visitor Information">بيانات الزائر</span></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label"><span data-ar="الاسم الكامل" data-en="Full Name">الاسم الكامل</span> <span class="req">*</span></label>
+          <input class="form-input" type="text" data-placeholder-ar="مثال: يارا خالد" data-placeholder-en="e.g. Yara Khalid" placeholder="مثال: يارا خالد">
+        </div>
+        <div class="form-group">
+          <label class="form-label"><span data-ar="رقم الهوية" data-en="ID Number">رقم الهوية</span> <span class="req">*</span></label>
+          <input class="form-input" type="text" data-placeholder-ar="مثال: 1234567890" data-placeholder-en="e.g. 1234567890" placeholder="مثال: 1234567890" maxlength="10">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label"><span data-ar="رقم الجوال" data-en="Phone Number">رقم الجوال</span> <span class="req">*</span></label>
+          <input class="form-input" id="phone" type="tel" data-placeholder-ar="مثال: 0512345678" data-placeholder-en="e.g. 0512345678" placeholder="مثال: 0512345678" maxlength="10" oninput="validatePhone(this)">
+          <small class="field-error" id="phone-error" data-ar="يجب أن يبدأ بـ 05 ويتكون من 10 أرقام" data-en="Must start with 05 and be 10 digits">يجب أن يبدأ بـ 05 ويتكون من 10 أرقام</small>
+        </div>
+        <div class="form-group">
+          <label class="form-label"><span data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</span> <span class="req">*</span></label>
+          <input class="form-input" type="email" data-placeholder-ar="example@email.com" data-placeholder-en="example@email.com" placeholder="example@email.com">
+        </div>
+      </div>
+
+      <div class="form-section-title">⚙️ <span data-ar="اختيار المعدة" data-en="Select Equipment">اختيار المعدة</span></div>
+
+      <div class="form-group">
+        <label class="form-label"><span data-ar="المعدة المراد مشاهدتها" data-en="Equipment to View">المعدة المراد مشاهدتها</span> <span class="req">*</span></label>
+        <div class="select-wrapper">
+          <select class="form-select" id="equipSelect" onchange="updateSummary()">
+            <option value=""        data-ar="— اختر المعدة —"       data-en="— Choose Equipment —">— اختر المعدة —</option>
+            <option value="F-15SA"  data-ar="F-15SA النسر"          data-en="F-15SA Eagle">F-15SA النسر</option>
+            <option value="CAAM"    data-ar="CAAM الدفاع الجوي"     data-en="CAAM Air Defense">CAAM الدفاع الجوي</option>
+            <option value="AFAV"    data-ar="AFAV المركبة البرية"    data-en="AFAV Ground Vehicle">AFAV المركبة البرية</option>
+            <option value="Shaheen" data-ar="شاهين UAV"             data-en="Shaheen UAV">شاهين UAV</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section-title">📅 <span data-ar="التاريخ والوقت" data-en="Date & Time">التاريخ والوقت</span></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label"><span data-ar="تاريخ الزيارة" data-en="Visit Date">تاريخ الزيارة</span> <span class="req">*</span></label>
+          <input class="form-input" type="date" id="visitDate" onchange="updateSummary()">
+        </div>
+        <div class="form-group">
+          <label class="form-label"><span data-ar="الوقت المتاح" data-en="Time Slot">الوقت المتاح</span> <span class="req">*</span></label>
+          <div class="time-slots">
+            <button class="time-slot disabled">09:00</button>
+            <button class="time-slot" onclick="selectTime(this,'10:00')">10:00</button>
+            <button class="time-slot" onclick="selectTime(this,'11:00')">11:00</button>
+            <button class="time-slot disabled">13:00</button>
+            <button class="time-slot" onclick="selectTime(this,'14:00')">14:00</button>
+            <button class="time-slot" onclick="selectTime(this,'15:00')">15:00</button>
+            <button class="time-slot" onclick="selectTime(this,'16:00')">16:00</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-area">
+        <button class="btn-confirm" onclick="confirmBooking()">
+          <span data-ar="تأكيد الحجز" data-en="Confirm Booking">تأكيد الحجز</span> <span>📅</span>
+        </button>
+        <button class="btn-secondary" data-ar="حجوزاتي" data-en="My Bookings">حجوزاتي</button>
+      </div>
+
+    </div>
+
+    <!-- شاشة النجاح -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon-wrap">✅</div>
+      <h2><span data-ar="تم الحجز" data-en="Booking">تم الحجز</span> <span class="hl" data-ar="بنجاح!" data-en="Confirmed!">بنجاح!</span></h2>
+      <p data-ar="سنتواصل معك خلال 24 ساعة لتأكيد موعدك." data-en="We'll contact you within 24 hours to confirm your appointment.">سنتواصل معك خلال 24 ساعة لتأكيد موعدك.</p>
+      <div class="booking-ref">
+        <span data-ar="رقم الحجز" data-en="Booking Reference">رقم الحجز</span>
+        <strong id="refNum">—</strong>
+      </div>
+      <div class="success-btns">
+        <button class="btn-confirm"   onclick="newBooking()"><span data-ar="حجز جديد"  data-en="New Booking">حجز جديد</span></button>
+        <button class="btn-secondary" onclick="newBooking()" data-ar="حجوزاتي" data-en="My Bookings">حجوزاتي</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- الملخص الجانبي -->
+  <div class="summary-card">
+    <div class="summary-head">
+      <h3>📋 <span data-ar="ملخص الحجز" data-en="Booking Summary">ملخص الحجز</span></h3>
+      <p data-ar="راجع بياناتك قبل التأكيد" data-en="Review your details before confirming">راجع بياناتك قبل التأكيد</p>
+    </div>
+    <div class="summary-body">
+      <div class="summary-row">
+        <span class="s-label" data-ar="المعدة"  data-en="Equipment">المعدة</span>
+        <span class="s-value empty" id="s-equip" data-ar-empty="لم تُحدد" data-en-empty="Not selected">لم تُحدد</span>
+      </div>
+      <div class="summary-row">
+        <span class="s-label" data-ar="التاريخ" data-en="Date">التاريخ</span>
+        <span class="s-value empty" id="s-date"  data-ar-empty="لم يُحدد" data-en-empty="Not selected">لم يُحدد</span>
+      </div>
+      <div class="summary-row">
+        <span class="s-label" data-ar="الوقت"   data-en="Time">الوقت</span>
+        <span class="s-value empty" id="s-time"  data-ar-empty="لم يُحدد" data-en-empty="Not selected">لم يُحدد</span>
+      </div>
+      <div class="summary-row">
+        <span class="s-label" data-ar="المدة"   data-en="Duration">المدة</span>
+        <span class="s-value" data-ar="~ساعتان" data-en="~2 hours">~ساعتان</span>
+      </div>
+      <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span data-ar="مواعيد متاحة اليوم" data-en="Slots Available Today">مواعيد متاحة اليوم</span>
+      </div>
+    </div>
+    <div class="help-box">
+      <strong>📌 <span data-ar="ملاحظة مهمة" data-en="Important Note">ملاحظة مهمة</span></strong>
+      <span data-ar="جميع الزيارات تستلزم موافقة مسبقة. يُرجى إحضار الهوية الوطنية يوم الزيارة." data-en="All visits require prior approval. Bring your national ID on the day of your visit.">جميع الزيارات تستلزم موافقة مسبقة. يُرجى إحضار الهوية الوطنية يوم الزيارة.</span>
+    </div>
+  </div>
+
+</div>
+
+<footer class="booking-footer">
+  <span data-ar="© 2026 DefenseX — رؤية الدفاع والطيران السعودي. جميع الحقوق محفوظة." data-en="© 2026 DefenseX — Saudi Defense & Aviation Vision. All rights reserved.">© 2026 DefenseX — رؤية الدفاع والطيران السعودي. جميع الحقوق محفوظة.</span>
+</footer>
+
+<script src="booking-app.js"></script>
+</body>
+</html>
