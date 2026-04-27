@@ -4,20 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تفاصيل القوات والمعدات | SDAV</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root { --saudi-green: #006c35; --white: #ffffff; --light-bg: #f8faf9; --text-dark: #2d3436; --overlay: rgba(0, 0, 0, 0.5); }
-        body { margin: 0; font-family: 'Tajawal', sans-serif; background-color: var(--light-bg); color: var(--text-dark); }
-        
-        /* الهيدر */
-        .main-header { background: var(--white); padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
-        .brand-right { display: flex; align-items: center; gap: 15px; }
-        .sdav-badge { background: var(--saudi-green); color: white; padding: 10px 14px; border-radius: 10px; font-weight: 800; }
-        .nav-left { display: flex; gap: 25px; list-style: none; margin: 0; align-items: center; }
-        .nav-link { text-decoration: none; color: #555; font-weight: 700; font-size: 0.95rem; }
-        .nav-link.active { color: var(--saudi-green); border-bottom: 3px solid var(--saudi-green); }
-        .lang-btn { background: #f0f2f1; border: 1px solid #ddd; padding: 6px 15px; border-radius: 50px; cursor: pointer; font-weight: 700; font-family: 'Tajawal'; }
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --green:       #006c35;
+        --green-dark:  #004d26;
+        --green-light: #e6f2ec;
+        --green-mid:   #d0eadb;
+        --saudi-green: #006c35;
+        --white:       #ffffff;
+        --light-bg:    #f5f8f6;
+        --bg:          #f5f8f6;
+        --bg-card:     #ffffff;
+        --text:        #1e2d25;
+        --text-dark:   #1e2d25;
+        --text-mid:    #4a6357;
+        --text-soft:   #8aa396;
+        --border:      #dde8e3;
+        --shadow-sm:   0 2px 10px rgba(0,0,0,0.06);
+        --radius-pill: 50px;
+        --transition:  .28s ease;
+        --font:        'Tajawal', sans-serif;
+        --overlay:     rgba(0, 0, 0, 0.5);
+    }
+    body { margin: 0; font-family: var(--font); background-color: var(--light-bg); color: var(--text-dark); }
 
+    /* ── Unified Header ── */
+    .main-header {
+        background: var(--white);
+        padding: 14px 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: var(--shadow-sm);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid var(--border);
+        gap: 20px;
+    }
+    .brand-right { display: flex; align-items: center; gap: 12px; }
+    .sdav-badge { background: var(--green); color: white; padding: 9px 14px; border-radius: 10px; font-weight: 800; font-size: .95rem; flex-shrink: 0; }
+    .brand-text h1 { font-size: .97rem; font-weight: 700; color: var(--text); margin: 0; line-height: 1.2; }
+    .brand-text p  { font-size: .7rem; color: var(--text-soft); margin: 0; }
+
+    /* Nav — pills style */
+    .nav-left { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; align-items: center; }
+    .nav-left li { display: flex; }
+    .nav-link {
+        display: inline-flex; align-items: center;
+        text-decoration: none; font-weight: 700; font-size: .88rem;
+        color: var(--text-mid);
+        padding: 8px 16px; border-radius: var(--radius-pill);
+        border: 1.5px solid transparent;
+        transition: all var(--transition); white-space: nowrap;
+    }
+    .nav-link:hover  { background: var(--green-light); color: var(--green); border-color: var(--green-mid); }
+    .nav-link.active { background: var(--green); color: var(--white); border-color: var(--green); }
+
+    /* Lang toggle — two-button pill */
+    .lang-toggle { display: flex; align-items: center; background: var(--light-bg); border: 1.5px solid var(--border); border-radius: var(--radius-pill); overflow: hidden; flex-shrink: 0; }
+    .lang-opt { padding: 7px 16px; font-size: .82rem; font-weight: 800; font-family: var(--font); border: none; background: transparent; cursor: pointer; color: var(--text-soft); transition: all .2s; }
+    .lang-opt.active             { background: var(--green); color: var(--white); }
+    .lang-opt:hover:not(.active) { background: var(--green-light); color: var(--green); }
         /* البانر */
         .hero-banner { position: relative; height: 450px; display: flex; align-items: center; justify-content: center; overflow: hidden; color: white; text-align: center; }
         .video-bg { position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; z-index: 1; transform: translate(-50%, -50%); object-fit: cover; filter: brightness(0.4); }
@@ -52,6 +101,19 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    /* ── Unified Footer ── */
+    .site-footer {
+        background: var(--green-dark);
+        color: rgba(255,255,255,.55);
+        text-align: center;
+        padding: 24px 50px;
+        font-size: .82rem;
+        font-family: var(--font);
+        line-height: 1.7;
+        border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .site-footer strong { color: rgba(255,255,255,.85); font-weight: 700; }
+</style>
     </style>
 </head>
 <body>
@@ -59,17 +121,20 @@
 <header class="main-header">
     <div class="brand-right">
         <div class="sdav-badge">SDAV</div>
-        <div>
-            <h1 id="nav-logo" style="font-size: 1.1rem; color: var(--saudi-green); margin: 0;">منصة الاستعراض الدفاعي</h1>
-            <p style="font-size: 0.7rem; color: #888; margin: 0;">Smart Defense Aviation Viewer</p>
+        <div class="brand-text">
+            <h1 id="nav-logo">منصة الاستعراض الدفاعي</h1>
+            <p>Smart Defense Aviation Viewer</p>
         </div>
     </div>
     <ul class="nav-left">
-        <li><a href="index.html" class="nav-link" id="nav-1">الرئيسية</a></li>
-        <li><a href="details.html" class="nav-link active" id="nav-2">التفاصيل</a></li>
-        <li><a href="form.html" class="nav-link" id="nav-3">حجز موعد</a></li>
-        <li><button class="lang-btn" onclick="toggleLang()" id="lang-btn">English</button></li>
+        <li><a href="index.html"    class="nav-link"        id="nav-1">الرئيسية</a></li>
+        <li><a href="details.html"  class="nav-link active" id="nav-2">التفاصيل</a></li>
+        <li><a href="bookingr.html" class="nav-link"        id="nav-3">حجز موعد</a></li>
     </ul>
+    <div class="lang-toggle">
+        <button class="lang-opt active" id="btn-ar" onclick="setLangDetails('ar')">عربي</button>
+        <button class="lang-opt"        id="btn-en" onclick="setLangDetails('en')">EN</button>
+    </div>
 </header>
 
 <section class="hero-banner">
@@ -244,5 +309,8 @@
         if(document.getElementById('modal').style.display === 'flex') openModal(activeId);
     }
 </script>
+<footer class="site-footer">
+    <span id="footer-txt">© 2026 <strong>DefenseX</strong> — YASHAرؤية الدفاع والطيران السعودي. جميع الحقوق محفوظة.</span>
+</footer>
 </body>
 </html>
