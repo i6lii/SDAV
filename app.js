@@ -847,3 +847,132 @@ document.addEventListener('DOMContentLoaded', () => {
 
   console.log('%cDefenseX Platform 🛡️', 'color:#4e6b35; font-size:16px; font-weight:bold');
 });
+
+    let isAr = true;
+
+    function toggleLang() {
+        isAr = !isAr;
+        const html = document.getElementById('mainHtml');
+        html.dir = isAr ? 'rtl' : 'ltr';
+        html.lang = isAr ? 'ar' : 'en';
+        document.getElementById('lang-btn').innerText = isAr ? 'English' : 'العربية';
+        
+        document.getElementById('nav-logo').innerText = isAr ? 'منصة الاستعراض الدفاعي' : 'Defense Platform';
+        document.getElementById('nav-1').innerText = isAr ? 'الرئيسية' : 'Home';
+        document.getElementById('nav-2').innerText = isAr ? 'التفاصيل' : 'Details';
+        document.getElementById('nav-3').innerText = isAr ? 'حجز موعد' : 'Booking';
+        document.getElementById('form-title').innerText = isAr ? 'طلب حجز موعد زيارة' : 'Book a Visit Appointment';
+        
+        document.getElementById('lbl-name').innerText = isAr ? 'الاسم الكامل' : 'Full Name';
+        document.getElementById('lbl-id').innerText = isAr ? 'رقم الهوية' : 'ID Number';
+        document.getElementById('lbl-phone').innerText = isAr ? 'رقم الجوال' : 'Phone Number';
+        document.getElementById('lbl-email').innerText = isAr ? 'البريد الإلكتروني' : 'Email Address';
+        document.getElementById('btn-submit').innerText = isAr ? 'تأكيد طلب الحجز' : 'Confirm Booking';
+        document.getElementById('msg-title').innerText = isAr ? 'تم الحجز بنجاح!' : 'Booking Successful!';
+        document.querySelectorAll('.t-lbl-name').forEach(el => el.innerText = isAr ? 'الاسم' : 'Name');
+        document.querySelectorAll('.t-lbl-force').forEach(el => el.innerText = isAr ? 'الجهة' : 'Force');
+        document.querySelectorAll('.t-lbl-date').forEach(el => el.innerText = isAr ? 'التاريخ' : 'Date');
+        document.querySelectorAll('.t-lbl-ref').forEach(el => el.innerText = isAr ? 'رقم المرجع' : 'Reference ID');
+        document.getElementById('btn-new').innerText = isAr ? 'حجز جديد' : 'New Booking';
+    }
+
+    function validateAndSubmit(e) {
+        e.preventDefault();
+        
+        const nameVal = document.getElementById('name').value;
+        const idVal = document.getElementById('id-num').value;
+        const phoneVal = document.getElementById('phone').value;
+        const forceVal = document.getElementById('force').value;
+        const dateVal = document.getElementById('date').value;
+
+        // التحقق
+        const idRegex = /^[12][0-9]{9}$/;
+        const phoneRegex = /^05[0-9]{8}$/;
+
+        if (!idRegex.test(idVal)) {
+            alert(isAr ? "خطأ في رقم الهوية" : "Invalid ID Number");
+            return;
+        }
+        if (!phoneRegex.test(phoneVal)) {
+            alert(isAr ? "خطأ في رقم الجوال" : "Invalid Phone Number");
+            return;
+        }
+        document.getElementById('form-content').style.display = 'none';
+        document.getElementById('success-card').style.display = 'block';
+        document.getElementById('res-name').innerText = nameVal;
+        document.getElementById('res-force').innerText = forceVal;
+        document.getElementById('res-date').innerText = dateVal;
+        document.getElementById('res-ref').innerText = "SDAV-" + Math.floor(Math.random()*90000 + 10000);
+    }
+ let currentLang = 'ar';
+    const texts = {
+        ar: {
+            brandName: "منصة الاستعراض الدفاعي",
+            navHome: "الرئيسية",
+            navDetails: "التفاصيل",
+            navBooking: "حجز موعد",
+            heroTitle: "مستقبل الطيران الدفاعي الذكي",
+            heroP: "نقدم لك واجهة متكاملة لاستعراض أحدث التقنيات الدفاعية الجوية في المملكة العربية السعودية، مع أدوات تحليل ذكية وتنسيق مباشر للمواعيد.",
+            btnFleet: "استكشف الأسطول",
+            btnVisit: "احجز زيارة ميدانية",
+            featuresTitle: "لماذا منصة SDAV؟",
+            f1t: "تحليل ذكي", f1p: "بيانات دقيقة ومحدثة لكل قطعة في الأسطول الدفاعي.",
+            f2t: "تغطية شاملة", f2p: "استعراض متكامل للقوات الجوية والبرية والبحرية.",
+            f3t: "تنسيق سريع", f3p: "نظام حجز مواعد إلكتروني يربطك بالجهات المختصة مباشرة.",
+            visionT: "نحمي وطناً يتأهب للمستقبل",
+            visionP1: "انطلاقاً من رؤية المملكة 2030، تهدف منصة SDAV إلى تعزيز الوعي بالقدرات الدفاعية الوطنية واستعراض التطور التقني.",
+            visionP2: '"غايتنا الأسمى هي حفظ سيادة وأمن وطننا ووحدته وحماية مقدساته."',
+            footer: "جميع الحقوق محفوظة © 2026 - فريق مشروع SDAV",
+            btnLang: "English"
+        },
+        en: {
+            brandName: "Defense Exhibition Platform",
+            navHome: "Home",
+            navDetails: "Details",
+            navBooking: "Booking",
+            heroTitle: "Future of Smart Defense Aviation",
+            heroP: "An integrated interface for showcasing Saudi Arabia's latest aerial defense technologies with smart analytics and direct coordination.",
+            btnFleet: "Explore Fleet",
+            btnVisit: "Book a Visit",
+            featuresTitle: "Why SDAV?",
+            f1t: "Smart Analytics", f1p: "Accurate and updated data for every piece in the defense fleet.",
+            f2t: "Full Coverage", f2p: "Comprehensive display of Air, Land, and Sea forces.",
+            f3t: "Fast Coordination", f3p: "An electronic booking system connecting you directly with authorities.",
+            visionT: "Protecting a Future-Ready Nation",
+            visionP1: "Inspired by Vision 2030, SDAV aims to enhance national defense awareness and showcase technical progress.",
+            visionP2: '"Our supreme goal is to preserve the sovereignty, security, and unity of our nation."',
+            footer: "All Rights Reserved © 2026 - SDAV Project Team",
+            btnLang: "العربية"
+        }
+    };
+
+    function toggleLanguage() {
+        const html = document.getElementById('html-tag');
+        currentLang = (currentLang === 'ar') ? 'en' : 'ar';
+        
+        // تغيير الاتجاه واللغة
+        html.dir = (currentLang === 'ar') ? 'rtl' : 'ltr';
+        html.lang = currentLang;
+
+        // تحديث النصوص
+        document.getElementById('brand-name').innerText = texts[currentLang].brandName;
+        document.getElementById('nav-home').innerText = texts[currentLang].navHome;
+        document.getElementById('nav-details').innerText = texts[currentLang].navDetails;
+        document.getElementById('nav-booking').innerText = texts[currentLang].navBooking;
+        document.getElementById('hero-title').innerText = texts[currentLang].heroTitle;
+        document.getElementById('hero-p').innerText = texts[currentLang].heroP;
+        document.getElementById('btn-fleet').innerText = texts[currentLang].btnFleet;
+        document.getElementById('btn-visit').innerText = texts[currentLang].btnVisit;
+        document.getElementById('features-main-title').innerText = texts[currentLang].featuresTitle;
+        document.getElementById('f1-t').innerText = texts[currentLang].f1t;
+        document.getElementById('f1-p').innerText = texts[currentLang].f1p;
+        document.getElementById('f2-t').innerText = texts[currentLang].f2t;
+        document.getElementById('f2-p').innerText = texts[currentLang].f2p;
+        document.getElementById('f3-t').innerText = texts[currentLang].f3t;
+        document.getElementById('f3-p').innerText = texts[currentLang].f3p;
+        document.getElementById('vision-t').innerText = texts[currentLang].visionT;
+        document.getElementById('vision-p1').innerText = texts[currentLang].visionP1;
+        document.getElementById('vision-p2').innerText = texts[currentLang].visionP2;
+        document.getElementById('footer-text').innerText = texts[currentLang].footer;
+        document.getElementById('lang-btn').innerText = texts[currentLang].btnLang;
+    }
