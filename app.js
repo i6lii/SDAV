@@ -450,6 +450,67 @@ function initDetail() {
 }
 
 // ══════════════════════════════════════════
+//   DETAILS PAGE — Equipment DB & Modal
+// ══════════════════════════════════════════
+
+let activeId = '';
+
+const db = {
+    'f15':       { ar: { n:'F-15 إيجل',         f:'القوات الجوية',  s:'2655 كم/س', r:'4630 كم',  c:'30500 م', t:'مقاتلة',         y:'1976', d:'مقاتلة تفوق جوي متطورة تُستخدم في مهام السيطرة الجوية والاعتراض.' },
+                   en: { n:'F-15 Eagle',          f:'Air Force',      s:'2655 km/h', r:'4630 km',  c:'30500 m', t:'Fighter',         y:'1976', d:'Advanced air superiority fighter used for air control and interception missions.' } },
+    'habob':     { ar: { n:'طائرة هبوب',          f:'القوات الجوية',  s:'250 كم/س',  r:'1500 كم',  c:'MALE',    t:'درون قتالي',     y:'2023', d:'طائرة مسيرة قتالية سعودية الصنع بالكامل، تمثل قفزة في التصنيع العسكري الوطني.' },
+                   en: { n:'Habob Drone',          f:'Air Force',      s:'250 km/h',  r:'1500 km',  c:'MALE',    t:'Combat UAV',      y:'2023', d:'Fully Saudi-made combat drone, representing a leap in national military manufacturing.' } },
+    'c130':      { ar: { n:'C-130 هيركوليز',      f:'القوات الجوية',  s:'592 كم/س',  r:'3800 كم',  c:'10000 م', t:'نقل عسكري',      y:'1956', d:'طائرة نقل استراتيجي ثقيل، من أكثر طائرات الشحن العسكرية استخداماً في العالم.' },
+                   en: { n:'C-130 Hercules',       f:'Air Force',      s:'592 km/h',  r:'3800 km',  c:'10000 m', t:'Transport',       y:'1956', d:'Heavy strategic transport aircraft, one of the most widely used military cargo planes in the world.' } },
+    'patriot':   { ar: { n:'باتريوت PAC-3',        f:'القوات الجوية',  s:'Mach 5',    r:'160 كم',   c:'24000 م', t:'دفاع جوي',       y:'1981', d:'منظومة دفاع جوي متكاملة تعترض الصواريخ الباليستية والطائرات على مدى واسع.' },
+                   en: { n:'Patriot PAC-3',         f:'Air Force',      s:'Mach 5',    r:'160 km',   c:'24000 m', t:'Air Defense',     y:'1981', d:'Integrated air defense system that intercepts ballistic missiles and aircraft over a wide range.' } },
+    'heet':      { ar: { n:'عربة هيت',             f:'القوات البرية',  s:'110 كم/س',  r:'600 كم',   c:'-',       t:'مدرعة 4x4',      y:'2024', d:'مركبة مدرعة سعودية الصنع بالكامل، مُصممة للعمليات البرية متعددة المهام.' },
+                   en: { n:'HEET Vehicle',          f:'Army',           s:'110 km/h',  r:'600 km',   c:'-',       t:'Armored 4x4',     y:'2024', d:'Fully Saudi-made armored vehicle designed for multi-mission land operations.' } },
+    'abrams':    { ar: { n:'M1A2 أبرامز',          f:'القوات البرية',  s:'67 كم/س',   r:'426 كم',   c:'-',       t:'دبابة قتال',     y:'1980', d:'دبابة قتال رئيسية من الجيل الثالث، تجمع بين قوة النيران والحماية والحركية الفائقة.' },
+                   en: { n:'M1A2 Abrams',           f:'Army',           s:'67 km/h',   r:'426 km',   c:'-',       t:'Main Battle Tank',y:'1980', d:'Third-generation main battle tank combining firepower, protection, and superior mobility.' } },
+    'bradley':   { ar: { n:'M2 برادلي',            f:'القوات البرية',  s:'66 كم/س',   r:'480 كم',   c:'-',       t:'مدرعة مشاة',     y:'1981', d:'ناقلة جند مدرعة توفر قدرة نقل وقتالية عالية لدعم وحدات المشاة الميكانيكية.' },
+                   en: { n:'M2 Bradley',            f:'Army',           s:'66 km/h',   r:'480 km',   c:'-',       t:'IFV',             y:'1981', d:'Armored personnel carrier providing high transport and combat capability for mechanized infantry.' } },
+    'paladin':   { ar: { n:'M109 بالادين',         f:'القوات البرية',  s:'56 كم/س',   r:'30 كم',    c:'-',       t:'مدفعية',         y:'1963', d:'مدفعية هاوتزر ذاتية الحركة بعيار 155مم توفر دعماً نيرانياً على مسافات بعيدة.' },
+                   en: { n:'M109 Paladin',          f:'Army',           s:'56 km/h',   r:'30 km',    c:'-',       t:'Artillery',       y:'1963', d:'Self-propelled 155mm howitzer providing fire support at long distances.' } },
+    'hsi32':     { ar: { n:'HSI-32',               f:'القوات البحرية', s:'48 عقدة',   r:'1200 ميل', c:'-',       t:'زورق اعتراض',    y:'2021', d:'زوارق اعتراض سريعة مصنعة محلياً، تُستخدم لحراسة السواحل ومكافحة التهريب.' },
+                   en: { n:'HSI-32 Boat',           f:'Navy',           s:'48 Knots',  r:'1200 miles',c:'-',      t:'Interceptor',     y:'2021', d:'Locally manufactured fast interceptor boats used for coast guarding and anti-smuggling.' } },
+    'frigate':   { ar: { n:'فرقاطة F-2000',        f:'القوات البحرية', s:'25 عقدة',   r:'7000 ميل', c:'-',       t:'فرقاطة',         y:'1985', d:'سفينة حربية متعددة المهام مجهزة بأحدث أنظمة الرادار والأسلحة البحرية.' },
+                   en: { n:'Frigate F-2000',        f:'Navy',           s:'25 Knots',  r:'7000 miles',c:'-',      t:'Frigate',         y:'1985', d:'Multi-mission warship equipped with the latest radar systems and naval weapons.' } },
+    'patrol':    { ar: { n:'زوارق اعتراض',         f:'القوات البحرية', s:'43 عقدة',   r:'800 ميل',  c:'-',       t:'زوارق سريعة',    y:'2020', d:'زوارق حماية السواحل السريعة، مزودة بأسلحة خفيفة وأنظمة متابعة متطورة.' },
+                   en: { n:'Patrol Boat',           f:'Navy',           s:'43 Knots',  r:'800 miles', c:'-',      t:'Fast Patrol',     y:'2020', d:'Fast coastal protection boats equipped with light weapons and advanced tracking systems.' } },
+    'submarine': { ar: { n:'غواصة هجومية',         f:'القوات البحرية', s:'20 عقدة',   r:'500 ميل',  c:'400 م',   t:'غواصة',          y:'2005', d:'غواصة صامتة متطورة تعمل في عمق المحيطات لمهام الردع والاستطلاع والهجوم.' },
+                   en: { n:'Attack Submarine',      f:'Navy',           s:'20 Knots',  r:'500 miles', c:'400 m',  t:'Submarine',       y:'2005', d:'Advanced silent submarine operating in deep oceans for deterrence, reconnaissance, and attack.' } }
+};
+
+function updateView(cat) {
+    document.querySelectorAll('.force-info-card').forEach(el => el.style.display = 'none');
+    if (cat !== 'all') document.getElementById(cat + '-info').style.display = 'block';
+    document.querySelectorAll('.card').forEach(c =>
+        c.style.display = (cat === 'all' || c.classList.contains(cat)) ? 'block' : 'none'
+    );
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    if (event) event.currentTarget.classList.add('active');
+}
+
+function openModal(id) {
+    activeId = id;
+    const lang = localStorage.getItem('sdav_lang') || 'ar';
+    const data = db[id][lang === 'ar' ? 'ar' : 'en'];
+    document.getElementById('m-title').innerText   = data.n;
+    document.getElementById('m-speed').innerText   = data.s;
+    document.getElementById('m-range').innerText   = data.r;
+    document.getElementById('m-ceiling').innerText = data.c;
+    document.getElementById('m-cat').innerText     = data.t;
+    document.getElementById('m-year').innerText    = data.y;
+    document.getElementById('m-desc').innerText    = data.d;
+    document.getElementById('modal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+}
+
+// ══════════════════════════════════════════
 //   BOOKING FORM
 // ══════════════════════════════════════════
 
@@ -834,6 +895,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initBookingForm();
   initBookingsPage();
   initScrollAnimations();
+  initLang();
 
   // Animate counters if present
   setTimeout(animateCounters, 600);
@@ -848,131 +910,245 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('%cDefenseX Platform 🛡️', 'color:#4e6b35; font-size:16px; font-weight:bold');
 });
 
-    let isAr = true;
+// ══════════════════════════════════════════
+//   UNIFIED LANGUAGE SYSTEM — Works on all pages
+// ══════════════════════════════════════════
 
-    function toggleLang() {
-        isAr = !isAr;
-        const html = document.getElementById('mainHtml');
-        html.dir = isAr ? 'rtl' : 'ltr';
-        html.lang = isAr ? 'ar' : 'en';
-        document.getElementById('lang-btn').innerText = isAr ? 'English' : 'العربية';
-        
-        document.getElementById('nav-logo').innerText = isAr ? 'منصة الاستعراض الدفاعي' : 'Defense Platform';
-        document.getElementById('nav-1').innerText = isAr ? 'الرئيسية' : 'Home';
-        document.getElementById('nav-2').innerText = isAr ? 'التفاصيل' : 'Details';
-        document.getElementById('nav-3').innerText = isAr ? 'حجز موعد' : 'Booking';
-        document.getElementById('form-title').innerText = isAr ? 'طلب حجز موعد زيارة' : 'Book a Visit Appointment';
-        
-        document.getElementById('lbl-name').innerText = isAr ? 'الاسم الكامل' : 'Full Name';
-        document.getElementById('lbl-id').innerText = isAr ? 'رقم الهوية' : 'ID Number';
-        document.getElementById('lbl-phone').innerText = isAr ? 'رقم الجوال' : 'Phone Number';
-        document.getElementById('lbl-email').innerText = isAr ? 'البريد الإلكتروني' : 'Email Address';
-        document.getElementById('btn-submit').innerText = isAr ? 'تأكيد طلب الحجز' : 'Confirm Booking';
-        document.getElementById('msg-title').innerText = isAr ? 'تم الحجز بنجاح!' : 'Booking Successful!';
-        document.querySelectorAll('.t-lbl-name').forEach(el => el.innerText = isAr ? 'الاسم' : 'Name');
-        document.querySelectorAll('.t-lbl-force').forEach(el => el.innerText = isAr ? 'الجهة' : 'Force');
-        document.querySelectorAll('.t-lbl-date').forEach(el => el.innerText = isAr ? 'التاريخ' : 'Date');
-        document.querySelectorAll('.t-lbl-ref').forEach(el => el.innerText = isAr ? 'رقم المرجع' : 'Reference ID');
-        document.getElementById('btn-new').innerText = isAr ? 'حجز جديد' : 'New Booking';
+const langTexts = {
+    ar: {
+        // Nav (shared)
+        navLogo: 'منصة الاستعراض الدفاعي',
+        nav1: 'الرئيسية', nav2: 'التفاصيل', nav3: 'حجز موعد',
+        langBtn: 'English',
+        // Footer (shared)
+        fH1: 'خريطة الموقع', fH2: 'فريق التطوير', fH3: 'SDAV Platform',
+        fL1: 'الرئيسية', fL2: 'التفاصيل', fL3: 'حجز زيارة',
+        copyright: '© 2026 جميع الحقوق محفوظة لمنصة SDAV - YASHA',
+        // Home page
+        brandName: 'منصة الاستعراض الدفاعي',
+        heroTitle: 'مستقبل الطيران الدفاعي الذكي',
+        heroP: 'نقدم لك واجهة متكاملة لاستعراض أحدث التقنيات الدفاعية الجوية في المملكة العربية السعودية، مع أدوات تحليل ذكية وتنسيق مباشر للمواعيد.',
+        btnFleet: 'استكشف المعدات', btnVisit: 'احجز زيارة ميدانية',
+        featuresTitle: 'لماذا منصة SDAV؟',
+        f1t: 'تحليل ذكي', f1p: 'بيانات دقيقة ومحدثة لكل قطعة في الأسطول الدفاعي.',
+        f2t: 'تغطية شاملة', f2p: 'استعراض متكامل للقوات الجوية والبرية والبحرية.',
+        f3t: 'تنسيق سريع', f3p: 'نظام حجز مواعد إلكتروني يربطك بالجهات المختصة مباشرة.',
+        visionT: 'نحمي وطناً يتأهب للمستقبل',
+        visionP1: 'انطلاقاً من رؤية المملكة 2030، تهدف منصة SDAV إلى تعزيز الوعي بالقدرات الدفاعية الوطنية واستعراض التطور التقني الذي وصلت إليه قواتنا المسلحة.',
+        visionP2: '"غايتنا الأسمى هي حفظ سيادة وأمن وطننا ووحدته وحماية مقدساته."',
+        // Details page
+        heroH: 'نحمي وطناً يتأهب للمستقبل',
+        heroDetails: 'غايتنا الأسمى هي حفظ سيادة وأمن وطننا ووحدته وحماية مقدساته.',
+        fAll: 'الكل', fAir: 'القوات الجوية', fLand: 'القوات البرية', fSea: 'القوات البحرية',
+        airH2: 'القوات الجوية الملكية السعودية',
+        airL: 'قائد القوات الجوية: سمو الفريق الركن تركي بن بندر',
+        landH2: 'القوات البرية الملكية السعودية',
+        landL: 'رئيس أركان القوات البرية: الفريق الركن فهد الجهني',
+        seaH2: 'القوات البحرية الملكية السعودية',
+        seaL: 'رئيس أركان القوات البحرية: الفريق الركن محمد الغريبي',
+        lblSpeed: 'السرعة القصوى', lblRange: 'المدى التشغيلي',
+        lblCeiling: 'سقف التحليق', lblCat: 'التصنيف',
+        lblYear: 'سنة التشغيل', mBtn: '🗓️ احجز موعد',
+        // Booking page
+        formTitle: 'طلب حجز موعد زيارة',
+        formDesc: 'يرجى تعبئة كافة الحقول المطلوبة لضمان معالجة طلبك',
+        lblName: 'الاسم الكامل', lblId: 'رقم الهوية',
+        lblPhone: 'رقم الجوال', lblEmail: 'البريد الإلكتروني',
+        lblForce: 'الجهة المستهدفة', lblDate: 'تاريخ الزيارة',
+        optAir: 'القوات الجوية الملكية السعودية',
+        optLand: 'القوات البرية الملكية السعودية',
+        optSea: 'القوات البحرية الملكية السعودية',
+        btnSubmit: 'تأكيد طلب الحجز',
+        msgTitle: 'تم الحجز بنجاح!',
+        msgBody: 'يرجى الاحتفاظ بتفاصيل الموعد الموضحة أدناه:',
+        tName: 'الاسم', tForce: 'الجهة', tDate: 'التاريخ', tRef: 'رقم المرجع',
+        btnNew: 'حجز جديد'
+    },
+    en: {
+        navLogo: 'Defense Exhibition Platform',
+        nav1: 'Home', nav2: 'Details', nav3: 'Booking',
+        langBtn: 'العربية',
+        fH1: 'Sitemap', fH2: 'Development Team', fH3: 'SDAV Platform',
+        fL1: 'Home', fL2: 'Details', fL3: 'Book Visit',
+        copyright: '© 2026 All Rights Reserved - SDAV Platform - YASHA',
+        brandName: 'Defense Exhibition Platform',
+        heroTitle: 'Future of Smart Defense Aviation',
+        heroP: 'An integrated interface for showcasing Saudi Arabia\'s latest aerial defense technologies with smart analytics and direct coordination.',
+        btnFleet: 'Explore Equipment', btnVisit: 'Book a Field Visit',
+        featuresTitle: 'Why SDAV?',
+        f1t: 'Smart Analytics', f1p: 'Accurate and updated data for every piece in the defense fleet.',
+        f2t: 'Full Coverage', f2p: 'Comprehensive display of Air, Land, and Sea forces.',
+        f3t: 'Fast Coordination', f3p: 'An electronic booking system connecting you directly with authorities.',
+        visionT: 'Protecting a Future-Ready Nation',
+        visionP1: 'Inspired by Vision 2030, SDAV aims to enhance national defense awareness and showcase the technical progress of our armed forces.',
+        visionP2: '"Our supreme goal is to preserve the sovereignty, security, and unity of our nation."',
+        heroH: 'Protecting Our Future',
+        heroDetails: 'Our goal is to preserve the sovereignty and security of our nation.',
+        fAll: 'All', fAir: 'Air Force', fLand: 'Army', fSea: 'Navy',
+        airH2: 'Royal Saudi Air Force',
+        airL: 'Air Force Commander: HRH Lt. Gen. Turki bin Bandar',
+        landH2: 'Royal Saudi Land Forces',
+        landL: 'Army Chief of Staff: Lt. Gen. Fahd Al-Juhani',
+        seaH2: 'Royal Saudi Naval Forces',
+        seaL: 'Navy Chief of Staff: Lt. Gen. Mohammed Al-Gharibi',
+        lblSpeed: 'Max Speed', lblRange: 'Operational Range',
+        lblCeiling: 'Service Ceiling', lblCat: 'Category',
+        lblYear: 'Service Year', mBtn: '🗓️ Book Appointment',
+        formTitle: 'Book a Visit Appointment',
+        formDesc: 'Please fill in all required fields to ensure your request is processed.',
+        lblName: 'Full Name', lblId: 'ID Number',
+        lblPhone: 'Phone Number', lblEmail: 'Email Address',
+        lblForce: 'Target Force', lblDate: 'Visit Date',
+        optAir: 'Royal Saudi Air Force',
+        optLand: 'Royal Saudi Land Forces',
+        optSea: 'Royal Saudi Naval Forces',
+        btnSubmit: 'Confirm Booking',
+        msgTitle: 'Booking Successful!',
+        msgBody: 'Please keep the appointment details shown below:',
+        tName: 'Name', tForce: 'Force', tDate: 'Date', tRef: 'Reference ID',
+        btnNew: 'New Booking'
+    }
+};
+
+// Helper: set text if element exists
+function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.innerText = text;
+}
+
+function applyLang(lang) {
+    const t = langTexts[lang];
+    const isAr = lang === 'ar';
+
+    // Update html element direction & lang
+    const htmlEl = document.documentElement;
+    htmlEl.dir  = isAr ? 'rtl' : 'ltr';
+    htmlEl.lang = lang;
+
+    // ── Shared nav (all pages use these IDs) ──
+    setText('nav-logo',   t.navLogo);
+    setText('brand-name', t.brandName);
+    setText('nav-sub',    isAr ? 'Smart Defense Aviation Viewer' : 'Smart Defense Aviation Viewer');
+    setText('nav-1',  t.nav1); setText('nav-2', t.nav2); setText('nav-3', t.nav3);
+    setText('nav-home', t.nav1); setText('nav-details', t.nav2); setText('nav-booking', t.nav3);
+    document.querySelectorAll('.lang-btn, .lang-switch').forEach(el => el.innerText = t.langBtn);
+
+    // ── Shared footer (all pages) ──
+    setText('f-h1', t.fH1); setText('f-h2', t.fH2); setText('f-h3', t.fH3);
+    setText('f-l1', t.fL1); setText('f-l2', t.fL2); setText('f-l3', t.fL3);
+    setText('copy-text', t.copyright);
+
+    // ── Home page ──
+    setText('hero-title', t.heroTitle);
+    setText('hero-p',     t.heroP);
+    setText('btn-fleet',  t.btnFleet);
+    setText('btn-visit',  t.btnVisit);
+    setText('features-main-title', t.featuresTitle);
+    setText('f1-t', t.f1t); setText('f1-p', t.f1p);
+    setText('f2-t', t.f2t); setText('f2-p', t.f2p);
+    setText('f3-t', t.f3t); setText('f3-p', t.f3p);
+    setText('vision-t',  t.visionT);
+    setText('vision-p1', t.visionP1);
+    setText('vision-p2', t.visionP2);
+
+    // ── Details page ──
+    setText('hero-h', t.heroH);
+    setText('hero-p', t.heroDetails); // overwrite if on details page
+    setText('f-all',  t.fAll); setText('f-air', t.fAir);
+    setText('f-land', t.fLand); setText('f-sea', t.fSea);
+    setText('air-h2', t.airH2); setText('air-l',  t.airL);
+    setText('land-h2',t.landH2); setText('land-l', t.landL);
+    setText('sea-h2', t.seaH2);  setText('sea-l',  t.seaL);
+    setText('lbl-speed',   t.lblSpeed);
+    setText('lbl-range',   t.lblRange);
+    setText('lbl-ceiling', t.lblCeiling);
+    setText('lbl-cat',     t.lblCat);
+    setText('lbl-year',    t.lblYear);
+    setText('m-btn',       t.mBtn);
+
+    // Equipment card names & forces (details page)
+    if (typeof db !== 'undefined') {
+        document.querySelectorAll('.eq-n').forEach(el => {
+            const d = db[el.dataset.id];
+            if (d) el.innerText = d[isAr ? 'ar' : 'en'].n;
+        });
+        document.querySelectorAll('.eq-f').forEach(el => {
+            const d = db[el.dataset.id];
+            if (d) el.innerText = d[isAr ? 'ar' : 'en'].f;
+        });
     }
 
-    function validateAndSubmit(e) {
-        e.preventDefault();
-        
-        const nameVal = document.getElementById('name').value;
-        const idVal = document.getElementById('id-num').value;
-        const phoneVal = document.getElementById('phone').value;
-        const forceVal = document.getElementById('force').value;
-        const dateVal = document.getElementById('date').value;
+    // ── Booking page ──
+    setText('form-title', t.formTitle);
+    setText('form-desc',  t.formDesc);
+    setText('lbl-name',   t.lblName);
+    setText('lbl-id',     t.lblId);
+    setText('lbl-phone',  t.lblPhone);
+    setText('lbl-email',  t.lblEmail);
+    setText('lbl-force',  t.lblForce);
+    setText('lbl-date',   t.lblDate);
+    setText('opt-air',    t.optAir);
+    setText('opt-land',   t.optLand);
+    setText('opt-sea',    t.optSea);
+    setText('btn-submit', t.btnSubmit);
+    setText('msg-title',  t.msgTitle);
+    setText('msg-body',   t.msgBody);
+    document.querySelectorAll('.t-lbl-name').forEach(el => el.innerText = t.tName);
+    document.querySelectorAll('.t-lbl-force').forEach(el => el.innerText = t.tForce);
+    document.querySelectorAll('.t-lbl-date').forEach(el => el.innerText = t.tDate);
+    document.querySelectorAll('.t-lbl-ref').forEach(el => el.innerText = t.tRef);
+    setText('btn-new', t.btnNew);
+}
 
-        // التحقق
-        const idRegex = /^[12][0-9]{9}$/;
-        const phoneRegex = /^05[0-9]{8}$/;
-
-        if (!idRegex.test(idVal)) {
-            alert(isAr ? "خطأ في رقم الهوية" : "Invalid ID Number");
-            return;
-        }
-        if (!phoneRegex.test(phoneVal)) {
-            alert(isAr ? "خطأ في رقم الجوال" : "Invalid Phone Number");
-            return;
-        }
-        document.getElementById('form-content').style.display = 'none';
-        document.getElementById('success-card').style.display = 'block';
-        document.getElementById('res-name').innerText = nameVal;
-        document.getElementById('res-force').innerText = forceVal;
-        document.getElementById('res-date').innerText = dateVal;
-        document.getElementById('res-ref').innerText = "SDAV-" + Math.floor(Math.random()*90000 + 10000);
+// Toggle and persist language across all pages
+function toggleLang() {
+    const current = localStorage.getItem('sdav_lang') || 'ar';
+    const next = current === 'ar' ? 'en' : 'ar';
+    localStorage.setItem('sdav_lang', next);
+    applyLang(next);
+    // Re-open modal with new lang if on details page
+    if (typeof activeId !== 'undefined' && activeId && document.getElementById('modal') &&
+        document.getElementById('modal').style.display === 'flex') {
+        openModal(activeId);
     }
- let currentLang = 'ar';
-    const texts = {
-        ar: {
-            brandName: "منصة الاستعراض الدفاعي",
-            navHome: "الرئيسية",
-            navDetails: "التفاصيل",
-            navBooking: "حجز موعد",
-            heroTitle: "مستقبل الطيران الدفاعي الذكي",
-            heroP: "نقدم لك واجهة متكاملة لاستعراض أحدث التقنيات الدفاعية الجوية في المملكة العربية السعودية، مع أدوات تحليل ذكية وتنسيق مباشر للمواعيد.",
-            btnFleet: "استكشف الأسطول",
-            btnVisit: "احجز زيارة ميدانية",
-            featuresTitle: "لماذا منصة SDAV؟",
-            f1t: "تحليل ذكي", f1p: "بيانات دقيقة ومحدثة لكل قطعة في الأسطول الدفاعي.",
-            f2t: "تغطية شاملة", f2p: "استعراض متكامل للقوات الجوية والبرية والبحرية.",
-            f3t: "تنسيق سريع", f3p: "نظام حجز مواعد إلكتروني يربطك بالجهات المختصة مباشرة.",
-            visionT: "نحمي وطناً يتأهب للمستقبل",
-            visionP1: "انطلاقاً من رؤية المملكة 2030، تهدف منصة SDAV إلى تعزيز الوعي بالقدرات الدفاعية الوطنية واستعراض التطور التقني.",
-            visionP2: '"غايتنا الأسمى هي حفظ سيادة وأمن وطننا ووحدته وحماية مقدساته."',
-            footer: "جميع الحقوق محفوظة © 2026 - فريق مشروع SDAV",
-            btnLang: "English"
-        },
-        en: {
-            brandName: "Defense Exhibition Platform",
-            navHome: "Home",
-            navDetails: "Details",
-            navBooking: "Booking",
-            heroTitle: "Future of Smart Defense Aviation",
-            heroP: "An integrated interface for showcasing Saudi Arabia's latest aerial defense technologies with smart analytics and direct coordination.",
-            btnFleet: "Explore Fleet",
-            btnVisit: "Book a Visit",
-            featuresTitle: "Why SDAV?",
-            f1t: "Smart Analytics", f1p: "Accurate and updated data for every piece in the defense fleet.",
-            f2t: "Full Coverage", f2p: "Comprehensive display of Air, Land, and Sea forces.",
-            f3t: "Fast Coordination", f3p: "An electronic booking system connecting you directly with authorities.",
-            visionT: "Protecting a Future-Ready Nation",
-            visionP1: "Inspired by Vision 2030, SDAV aims to enhance national defense awareness and showcase technical progress.",
-            visionP2: '"Our supreme goal is to preserve the sovereignty, security, and unity of our nation."',
-            footer: "All Rights Reserved © 2026 - SDAV Project Team",
-            btnLang: "العربية"
-        }
-    };
+}
 
-    function toggleLanguage() {
-        const html = document.getElementById('html-tag');
-        currentLang = (currentLang === 'ar') ? 'en' : 'ar';
-        
-        // تغيير الاتجاه واللغة
-        html.dir = (currentLang === 'ar') ? 'rtl' : 'ltr';
-        html.lang = currentLang;
+// Same function name used by home.html button
+function toggleLanguage() { toggleLang(); }
 
-        // تحديث النصوص
-        document.getElementById('brand-name').innerText = texts[currentLang].brandName;
-        document.getElementById('nav-home').innerText = texts[currentLang].navHome;
-        document.getElementById('nav-details').innerText = texts[currentLang].navDetails;
-        document.getElementById('nav-booking').innerText = texts[currentLang].navBooking;
-        document.getElementById('hero-title').innerText = texts[currentLang].heroTitle;
-        document.getElementById('hero-p').innerText = texts[currentLang].heroP;
-        document.getElementById('btn-fleet').innerText = texts[currentLang].btnFleet;
-        document.getElementById('btn-visit').innerText = texts[currentLang].btnVisit;
-        document.getElementById('features-main-title').innerText = texts[currentLang].featuresTitle;
-        document.getElementById('f1-t').innerText = texts[currentLang].f1t;
-        document.getElementById('f1-p').innerText = texts[currentLang].f1p;
-        document.getElementById('f2-t').innerText = texts[currentLang].f2t;
-        document.getElementById('f2-p').innerText = texts[currentLang].f2p;
-        document.getElementById('f3-t').innerText = texts[currentLang].f3t;
-        document.getElementById('f3-p').innerText = texts[currentLang].f3p;
-        document.getElementById('vision-t').innerText = texts[currentLang].visionT;
-        document.getElementById('vision-p1').innerText = texts[currentLang].visionP1;
-        document.getElementById('vision-p2').innerText = texts[currentLang].visionP2;
-        document.getElementById('footer-text').innerText = texts[currentLang].footer;
-        document.getElementById('lang-btn').innerText = texts[currentLang].btnLang;
+// Auto-apply saved language on page load
+function initLang() {
+    const saved = localStorage.getItem('sdav_lang') || 'ar';
+    applyLang(saved);
+}
+
+// Booking form validation
+function validateAndSubmit(e) {
+    e.preventDefault();
+    const lang = localStorage.getItem('sdav_lang') || 'ar';
+    const isAr = lang === 'ar';
+
+    const nameVal  = document.getElementById('name').value;
+    const idVal    = document.getElementById('id-num').value;
+    const phoneVal = document.getElementById('phone').value;
+    const forceVal = document.getElementById('force').value;
+    const dateVal  = document.getElementById('date').value;
+
+    const idRegex    = /^[12][0-9]{9}$/;
+    const phoneRegex = /^05[0-9]{8}$/;
+
+    if (!idRegex.test(idVal)) {
+        alert(isAr ? 'خطأ في رقم الهوية' : 'Invalid ID Number');
+        return;
     }
+    if (!phoneRegex.test(phoneVal)) {
+        alert(isAr ? 'خطأ في رقم الجوال' : 'Invalid Phone Number');
+        return;
+    }
+    document.getElementById('form-content').style.display = 'none';
+    document.getElementById('success-card').style.display = 'block';
+    document.getElementById('res-name').innerText  = nameVal;
+    document.getElementById('res-force').innerText = forceVal;
+    document.getElementById('res-date').innerText  = dateVal;
+    document.getElementById('res-ref').innerText   = 'SDAV-' + Math.floor(Math.random() * 90000 + 10000);
+}
