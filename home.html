@@ -101,9 +101,79 @@
         .vision-text h2 { color: var(--saudi-green); font-size: 2.5rem; font-weight: 800; margin-bottom: 20px; }
         .vision-img { flex: 1; min-width: 300px; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         .vision-img img { width: 100%; display: block; }
+footer { 
+    background: #1e272e; 
+    color: #dcdde1; 
+    padding: 60px 50px 20px; 
+    margin-top: auto; }
 
-        footer { background: #1a1a1a; color: white; padding: 40px 50px; text-align: center; }
-    </style>
+.footer-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 40px; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    border-bottom: 1px solid #3d3d3d; 
+    padding-bottom: 40px; 
+}
+
+.footer-col h4 { 
+    color: var(--white); 
+    margin-bottom: 20px; 
+    font-size: 1.2rem; 
+    border-right: 4px solid var(--saudi-green); 
+    padding-right: 12px; 
+}
+
+/* تعديل الحواف عند اللغة الإنجليزية */
+[dir="ltr"] .footer-col h4 { 
+    border-right: none; 
+    border-left: 4px solid var(--saudi-green); 
+    padding-right: 0; 
+    padding-left: 12px; 
+}
+
+.footer-links { list-style: none; padding: 0; margin: 0; }
+.footer-links li { margin-bottom: 12px; }
+
+.footer-links a { 
+    color: #aaa; 
+    text-decoration: none; 
+    font-size: 0.95rem; 
+    transition: 0.3s; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+}
+
+.footer-links a:hover { 
+    color: var(--white); 
+    transform: translateX(-8px); 
+}
+
+[dir="ltr"] .footer-links a:hover { 
+    transform: translateX(8px); 
+}
+
+.footer-about p { 
+    font-size: 0.9rem; 
+    line-height: 1.8; 
+    color: #aaa; 
+    margin: 0;
+}
+
+.copyright { 
+    text-align: center; 
+    padding-top: 25px; 
+    font-size: 0.85rem; 
+    color: #777; 
+}
+
+@media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr; text-align: center; }
+    .footer-col h4 { border-right: none; border-left: none; border-bottom: 2px solid var(--saudi-green); display: inline-block; padding: 0 0 5px 0; }
+    .footer-links a { justify-content: center; }
+}    </style>
 </head>
 <body>
 
@@ -118,7 +188,7 @@
     <ul class="nav-left">
         <li><a href="home.html" class="nav-link active" id="nav-home">الرئيسية</a></li>
         <li><a href="details.html" class="nav-link" id="nav-details">التفاصيل</a></li>
-        <li><a href="booking.html" class="nav-link" id="nav-booking">حجز موعد</a></li>
+        <li><a href="bookingr.html" class="nav-link" id="nav-booking">حجز موعد</a></li>
         <li><button class="lang-switch" onclick="toggleLanguage()" id="lang-btn">English</button></li>
     </ul>
 </header>
@@ -130,7 +200,7 @@
         <p id="hero-p">نقدم لك واجهة متكاملة لاستعراض أحدث التقنيات الدفاعية الجوية في المملكة العربية السعودية، مع أدوات تحليل ذكية وتنسيق مباشر للمواعيد.</p>
         <div class="cta-buttons">
             <a href="details.html" class="btn-primary" id="btn-fleet">استكشف المعدات</a>
-            <a href="booking.html" class="btn-secondary" id="btn-visit">احجز زيارة ميدانية</a>
+            <a href="bookingr.html" class="btn-secondary" id="btn-visit">احجز زيارة ميدانية</a>
         </div>
     </div>
 </section>
@@ -166,9 +236,37 @@
         <img src="https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&q=80&w=800" alt="Saudi Defense">
     </div>
 </section>
+<footer>
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4 id="f-h1">خريطة الموقع</h4>
+            <ul class="footer-links">
+                <li><a href="home.html"><span id="f-l1">الرئيسية</span></a></li>
+                <li><a href="details.html"><span id="f-l2">التفاصيل</span></a></li>
+                <li><a href="bookingr.html"><span id="f-l3">حجز زيارة</span></a></li>
+            </ul>
+        </div>
 
-<footer id="footer-text">
-    <p>جميع الحقوق محفوظة &copy; 2026 - فريق مشروع SDAV</p>
+        <div class="footer-col">
+            <h4 id="f-h2">فريق التطوير</h4>
+            <ul class="footer-links">
+                <li><a href="bookingr.html"> Yara Khalid</a></li>
+                <li><a href="details.html">Sara Mesfer</a></li>
+                <li><a href="details.html">Aljazi Naje</a></li>
+                <li><a href="home.html">Hajar Fayz</a></li>
+                <li><a href="home.html"> Amna Saleh</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col footer-about">
+            <h4 id="f-h3">SDAV Platform</h4>
+            <p id="f-p1">نظام ذكي متكامل لاستعراض المعدات والآليات العسكرية، يهدف لتعزيز الوعي بالقدرات الدفاعية الوطنية وتسهيل التواصل المباشر.</p>
+        </div>
+    </div>
+    
+    <div class="copyright" id="copy-text">
+        &copy; 2026 جميع الحقوق محفوظة لمنصة SDAV - YASHA
+    </div>
 </footer>
 
 <script>
