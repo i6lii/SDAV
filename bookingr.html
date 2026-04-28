@@ -5,60 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حجز موعد | SDAV</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root { --saudi-green: #006c35; --white: #ffffff; --light-bg: #f8faf9; --text-dark: #2d3436; --border: #e0e0e0; --error: #d63031; }
-        body { margin: 0; font-family: 'Tajawal', sans-serif; background-color: var(--light-bg); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; }
-        
-        /* الهيدر */
-        .main-header { background: var(--white); padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
-        .brand-right { display: flex; align-items: center; gap: 15px; }
-        .sdav-badge { background: var(--saudi-green); color: white; padding: 10px 14px; border-radius: 10px; font-weight: 800; }
-        .nav-left { display: flex; gap: 25px; list-style: none; margin: 0; align-items: center; }
-        .nav-link { text-decoration: none; color: #555; font-weight: 700; font-size: 0.95rem; }
-        .nav-link.active { color: var(--saudi-green); border-bottom: 3px solid var(--saudi-green); }
-        .lang-btn { background: #f0f2f1; border: 1px solid #ddd; padding: 6px 15px; border-radius: 50px; cursor: pointer; font-weight: 700; font-family: 'Tajawal'; }
-
-        /* حاوية النموذج */
-        .content-wrap { flex: 1; padding-bottom: 50px; }
-        .form-container { max-width: 800px; margin: 50px auto; background: var(--white); padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-top: 5px solid var(--saudi-green); }
-        .form-header { text-align: center; margin-bottom: 40px; }
-        .form-header h2 { color: var(--saudi-green); font-size: 2rem; margin-bottom: 10px; font-weight: 800; }
-        
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .form-group { display: flex; flex-direction: column; margin-bottom: 10px; }
-        
-        label { font-weight: 700; margin-bottom: 8px; color: #444; font-size: 0.9rem; }
-        label::after { content: " *"; color: var(--error); }
-        
-        input, select { padding: 12px 15px; border: 1px solid var(--border); border-radius: 10px; font-family: 'Tajawal'; font-size: 1rem; transition: 0.3s; }
-        input:focus, select:focus { outline: none; border-color: var(--saudi-green); box-shadow: 0 0 0 3px rgba(0, 108, 53, 0.1); }
-        
-        .submit-btn { background: var(--saudi-green); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-top: 20px; width: 100%; grid-column: span 2; }
-        .submit-btn:hover { background: #005228; transform: translateY(-2px); }
-
-        /* مربع تفاصيل الحجز بعد الإرسال */
-        #success-card { display: none; margin-top: 20px; padding: 30px; border-radius: 15px; background: #f0f9f4; border: 1px solid #c3e6cb; animation: fadeIn 0.5s ease; }
-        .ticket-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .info-item { background: white; padding: 10px 15px; border-radius: 8px; border: 1px solid #eee; }
-        .info-item strong { display: block; color: var(--saudi-green); font-size: 0.8rem; }
-
-        /* الفوتر */
-        footer { background: #1e272e; color: #dcdde1; padding: 40px 50px 20px; margin-top: auto; }
-        .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto; border-bottom: 1px solid #3d3d3d; padding-bottom: 30px; }
-        .footer-col h4 { color: var(--white); margin-bottom: 15px; font-size: 1.1rem; border-right: 3px solid var(--saudi-green); padding-right: 10px; }
-        .footer-links { list-style: none; padding: 0; margin: 0; }
-        .footer-links li { margin-bottom: 8px; }
-        .footer-links a { color: #aaa; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
-        .footer-links a:hover { color: var(--white); padding-right: 5px; }
-        .copyright { text-align: center; padding-top: 20px; font-size: 0.8rem; color: #777; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        @media (max-width: 768px) {
-            .form-grid, .footer-grid, .ticket-info { grid-template-columns: 1fr; }
-            .submit-btn { grid-column: span 1; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -166,65 +113,6 @@
         &copy; 2026 جميع الحقوق محفوظة لمنصة SDAV - YASHA
     </div>
 </footer>
-
-<script>
-    let isAr = true;
-
-    function toggleLang() {
-        isAr = !isAr;
-        const html = document.getElementById('mainHtml');
-        html.dir = isAr ? 'rtl' : 'ltr';
-        html.lang = isAr ? 'ar' : 'en';
-        document.getElementById('lang-btn').innerText = isAr ? 'English' : 'العربية';
-        
-        document.getElementById('nav-logo').innerText = isAr ? 'منصة الاستعراض الدفاعي' : 'Defense Platform';
-        document.getElementById('nav-1').innerText = isAr ? 'الرئيسية' : 'Home';
-        document.getElementById('nav-2').innerText = isAr ? 'التفاصيل' : 'Details';
-        document.getElementById('nav-3').innerText = isAr ? 'حجز موعد' : 'Booking';
-        document.getElementById('form-title').innerText = isAr ? 'طلب حجز موعد زيارة' : 'Book a Visit Appointment';
-        
-        document.getElementById('lbl-name').innerText = isAr ? 'الاسم الكامل' : 'Full Name';
-        document.getElementById('lbl-id').innerText = isAr ? 'رقم الهوية' : 'ID Number';
-        document.getElementById('lbl-phone').innerText = isAr ? 'رقم الجوال' : 'Phone Number';
-        document.getElementById('lbl-email').innerText = isAr ? 'البريد الإلكتروني' : 'Email Address';
-        document.getElementById('btn-submit').innerText = isAr ? 'تأكيد طلب الحجز' : 'Confirm Booking';
-        document.getElementById('msg-title').innerText = isAr ? 'تم الحجز بنجاح!' : 'Booking Successful!';
-        document.querySelectorAll('.t-lbl-name').forEach(el => el.innerText = isAr ? 'الاسم' : 'Name');
-        document.querySelectorAll('.t-lbl-force').forEach(el => el.innerText = isAr ? 'الجهة' : 'Force');
-        document.querySelectorAll('.t-lbl-date').forEach(el => el.innerText = isAr ? 'التاريخ' : 'Date');
-        document.querySelectorAll('.t-lbl-ref').forEach(el => el.innerText = isAr ? 'رقم المرجع' : 'Reference ID');
-        document.getElementById('btn-new').innerText = isAr ? 'حجز جديد' : 'New Booking';
-    }
-
-    function validateAndSubmit(e) {
-        e.preventDefault();
-        
-        const nameVal = document.getElementById('name').value;
-        const idVal = document.getElementById('id-num').value;
-        const phoneVal = document.getElementById('phone').value;
-        const forceVal = document.getElementById('force').value;
-        const dateVal = document.getElementById('date').value;
-
-        // التحقق
-        const idRegex = /^[12][0-9]{9}$/;
-        const phoneRegex = /^05[0-9]{8}$/;
-
-        if (!idRegex.test(idVal)) {
-            alert(isAr ? "خطأ في رقم الهوية" : "Invalid ID Number");
-            return;
-        }
-        if (!phoneRegex.test(phoneVal)) {
-            alert(isAr ? "خطأ في رقم الجوال" : "Invalid Phone Number");
-            return;
-        }
-        document.getElementById('form-content').style.display = 'none';
-        document.getElementById('success-card').style.display = 'block';
-        document.getElementById('res-name').innerText = nameVal;
-        document.getElementById('res-force').innerText = forceVal;
-        document.getElementById('res-date').innerText = dateVal;
-        document.getElementById('res-ref').innerText = "SDAV-" + Math.floor(Math.random()*90000 + 10000);
-    }
-</script>
-
+<script src="app.js"></script>
 </body>
 </html>
