@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-tag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرئيسية | SDAV - منصة الاستعراض الدفاعي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root { 
+            --saudi-green: #006c35; 
+            --white: #ffffff; 
+            --light-bg: #f8faf9; 
+            --text-dark: #2d3436; 
+            --overlay: rgba(0, 0, 0, 0.7); 
+        }
+
+        body { 
+            margin: 0; 
+            font-family: 'Tajawal', sans-serif; 
+            background-color: var(--light-bg); 
+            color: var(--text-dark); 
+            overflow-x: hidden;
+            transition: all 0.3s ease; /* لإضافة نعومة عند تبديل الاتجاه */
+        }
+
+        /* الهيدر الموحد */
+        .main-header { 
+            background: var(--white); 
+            padding: 15px 50px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+        .brand-right { display: flex; align-items: center; gap: 15px; }
+        .sdav-badge { background: var(--saudi-green); color: white; padding: 10px 14px; border-radius: 10px; font-weight: 800; }
+        
+        .nav-left { display: flex; gap: 25px; list-style: none; margin: 0; align-items: center; }
+        .nav-link { text-decoration: none; color: #555; font-weight: 700; font-size: 0.95rem; transition: 0.3s; }
+        .nav-link.active { color: var(--saudi-green); border-bottom: 3px solid var(--saudi-green); }
+        .nav-link:hover { color: var(--saudi-green); }
+
+        /* زر الترجمة الجديد */
+        .lang-switch {
+            background: #eee;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 700;
+            color: var(--saudi-green);
+            transition: 0.3s;
+        }
+        .lang-switch:hover { background: var(--saudi-green); color: white; }
+
+        /* قسم الهيرو */
+        .hero-section {
+            position: relative;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            background: url('https://static.srpcdigital.com/styles/414x217/public/2025-12/1299921.jpeg.webp') no-repeat center center/cover;
+            background-attachment: fixed;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, var(--overlay), rgba(0,108,53,0.3));
+            z-index: 1;
+        }
+
+        .hero-content { position: relative; z-index: 2; max-width: 800px; padding: 20px; }
+        .hero-content h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero-content p { font-size: 1.2rem; margin-bottom: 30px; line-height: 1.8; opacity: 0.95; }
+
+        .cta-buttons { display: flex; gap: 20px; justify-content: center; }
+        .btn-primary { background: var(--saudi-green); color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none; font-weight: 700; transition: 0.3s; }
+        .btn-secondary { background: transparent; color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none; font-weight: 700; border: 2px solid white; transition: 0.3s; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,108,53,0.3); }
+        .btn-secondary:hover { background: white; color: var(--saudi-green); }
+
+        .features { padding: 80px 50px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 50px; }
+        .feature-card { background: white; padding: 40px 30px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: 0.3s; border-bottom: 4px solid transparent; }
+        .feature-card:hover { transform: translateY(-10px); border-bottom: 4px solid var(--saudi-green); }
+        .feature-card i { font-size: 3rem; color: var(--saudi-green); margin-bottom: 20px; }
+        .feature-card h3 { margin-bottom: 15px; font-weight: 800; }
+
+        .vision-section { background: #f1f3f2; padding: 100px 50px; display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
+        .vision-text { flex: 1; min-width: 300px; }
+        .vision-text h2 { color: var(--saudi-green); font-size: 2.5rem; font-weight: 800; margin-bottom: 20px; }
+        .vision-img { flex: 1; min-width: 300px; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .vision-img img { width: 100%; display: block; }
+
+        footer { background: #1a1a1a; color: white; padding: 40px 50px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<header class="main-header">
+    <div class="brand-right">
+        <div class="sdav-badge">SDAV</div>
+        <div>
+            <h1 id="brand-name" style="font-size: 1.1rem; color: var(--saudi-green); margin: 0;">منصة الاستعراض الدفاعي</h1>
+            <p id="brand-sub" style="font-size: 0.7rem; color: #888; margin: 0;">Smart Defense Aviation Viewer</p>
+        </div>
+    </div>
+    <ul class="nav-left">
+        <li><a href="home.html" class="nav-link active" id="nav-home">الرئيسية</a></li>
+        <li><a href="details.html" class="nav-link" id="nav-details">التفاصيل</a></li>
+        <li><a href="booking.html" class="nav-link" id="nav-booking">حجز موعد</a></li>
+        <li><button class="lang-switch" onclick="toggleLanguage()" id="lang-btn">English</button></li>
+    </ul>
+</header>
+
+<section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1 id="hero-title">مستقبل الطيران الدفاعي الذكي</h1>
+        <p id="hero-p">نقدم لك واجهة متكاملة لاستعراض أحدث التقنيات الدفاعية الجوية في المملكة العربية السعودية، مع أدوات تحليل ذكية وتنسيق مباشر للمواعيد.</p>
+        <div class="cta-buttons">
+            <a href="details.html" class="btn-primary" id="btn-fleet">استكشف المعدات</a>
+            <a href="booking.html" class="btn-secondary" id="btn-visit">احجز زيارة ميدانية</a>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <h2 id="features-main-title" style="font-weight: 800; font-size: 2rem;">لماذا منصة SDAV؟</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <i class="fas fa-microchip"></i>
+            <h3 id="f1-t">تحليل ذكي</h3>
+            <p id="f1-p">بيانات دقيقة ومحدثة لكل قطعة في الأسطول الدفاعي.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-plane-shield"></i>
+            <h3 id="f2-t">تغطية شاملة</h3>
+            <p id="f2-p">استعراض متكامل للقوات الجوية والبرية والبحرية.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-calendar-check"></i>
+            <h3 id="f3-t">تنسيق سريع</h3>
+            <p id="f3-p">نظام حجز مواعد إلكتروني يربطك بالجهات المختصة مباشرة.</p>
+        </div>
+    </div>
+</section>
+
+<section class="vision-section">
+    <div class="vision-text">
+        <h2 id="vision-t">نحمي وطناً يتأهب للمستقبل</h2>
+        <p id="vision-p1">انطلاقاً من رؤية المملكة 2030، تهدف منصة SDAV إلى تعزيز الوعي بالقدرات الدفاعية الوطنية واستعراض التطور التقني الذي وصلت إليه قواتنا المسلحة.</p>
+        <p id="vision-p2" style="margin-top:20px; font-weight:700;">"غايتنا الأسمى هي حفظ سيادة وأمن وطننا ووحدته وحماية مقدساته."</p>
+    </div>
+    <div class="vision-img">
+        <img src="https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&q=80&w=800" alt="Saudi Defense">
+    </div>
+</section>
+
+<footer id="footer-text">
+    <p>جميع الحقوق محفوظة &copy; 2026 - فريق مشروع SDAV</p>
+</footer>
+
+<script>
+    let currentLang = 'ar';
+    const texts = {
+        ar: {
+            brandName: "منصة الاستعراض الدفاعي",
+            navHome: "الرئيسية",
+            navDetails: "التفاصيل",
+            navBooking: "حجز موعد",
+            heroTitle: "مستقبل الطيران الدفاعي الذكي",
+            heroP: "نقدم لك واجهة متكاملة لاستعراض أحدث التقنيات الدفاعية الجوية في المملكة العربية السعودية، مع أدوات تحليل ذكية وتنسيق مباشر للمواعيد.",
+            btnFleet: "استكشف الأسطول",
+            btnVisit: "احجز زيارة ميدانية",
+            featuresTitle: "لماذا منصة SDAV؟",
+            f1t: "تحليل ذكي", f1p: "بيانات دقيقة ومحدثة لكل قطعة في الأسطول الدفاعي.",
+            f2t: "تغطية شاملة", f2p: "استعراض متكامل للقوات الجوية والبرية والبحرية.",
+            f3t: "تنسيق سريع", f3p: "نظام حجز مواعد إلكتروني يربطك بالجهات المختصة مباشرة.",
+            visionT: "نحمي وطناً يتأهب للمستقبل",
+            visionP1: "انطلاقاً من رؤية المملكة 2030، تهدف منصة SDAV إلى تعزيز الوعي بالقدرات الدفاعية الوطنية واستعراض التطور التقني.",
+            visionP2: '"غايتنا الأسمى هي حفظ سيادة وأمن وطننا ووحدته وحماية مقدساته."',
+            footer: "جميع الحقوق محفوظة © 2026 - فريق مشروع SDAV",
+            btnLang: "English"
+        },
+        en: {
+            brandName: "Defense Exhibition Platform",
+            navHome: "Home",
+            navDetails: "Details",
+            navBooking: "Booking",
+            heroTitle: "Future of Smart Defense Aviation",
+            heroP: "An integrated interface for showcasing Saudi Arabia's latest aerial defense technologies with smart analytics and direct coordination.",
+            btnFleet: "Explore Fleet",
+            btnVisit: "Book a Visit",
+            featuresTitle: "Why SDAV?",
+            f1t: "Smart Analytics", f1p: "Accurate and updated data for every piece in the defense fleet.",
+            f2t: "Full Coverage", f2p: "Comprehensive display of Air, Land, and Sea forces.",
+            f3t: "Fast Coordination", f3p: "An electronic booking system connecting you directly with authorities.",
+            visionT: "Protecting a Future-Ready Nation",
+            visionP1: "Inspired by Vision 2030, SDAV aims to enhance national defense awareness and showcase technical progress.",
+            visionP2: '"Our supreme goal is to preserve the sovereignty, security, and unity of our nation."',
+            footer: "All Rights Reserved © 2026 - SDAV Project Team",
+            btnLang: "العربية"
+        }
+    };
+
+    function toggleLanguage() {
+        const html = document.getElementById('html-tag');
+        currentLang = (currentLang === 'ar') ? 'en' : 'ar';
+        
+        // تغيير الاتجاه واللغة
+        html.dir = (currentLang === 'ar') ? 'rtl' : 'ltr';
+        html.lang = currentLang;
+
+        // تحديث النصوص
+        document.getElementById('brand-name').innerText = texts[currentLang].brandName;
+        document.getElementById('nav-home').innerText = texts[currentLang].navHome;
+        document.getElementById('nav-details').innerText = texts[currentLang].navDetails;
+        document.getElementById('nav-booking').innerText = texts[currentLang].navBooking;
+        document.getElementById('hero-title').innerText = texts[currentLang].heroTitle;
+        document.getElementById('hero-p').innerText = texts[currentLang].heroP;
+        document.getElementById('btn-fleet').innerText = texts[currentLang].btnFleet;
+        document.getElementById('btn-visit').innerText = texts[currentLang].btnVisit;
+        document.getElementById('features-main-title').innerText = texts[currentLang].featuresTitle;
+        document.getElementById('f1-t').innerText = texts[currentLang].f1t;
+        document.getElementById('f1-p').innerText = texts[currentLang].f1p;
+        document.getElementById('f2-t').innerText = texts[currentLang].f2t;
+        document.getElementById('f2-p').innerText = texts[currentLang].f2p;
+        document.getElementById('f3-t').innerText = texts[currentLang].f3t;
+        document.getElementById('f3-p').innerText = texts[currentLang].f3p;
+        document.getElementById('vision-t').innerText = texts[currentLang].visionT;
+        document.getElementById('vision-p1').innerText = texts[currentLang].visionP1;
+        document.getElementById('vision-p2').innerText = texts[currentLang].visionP2;
+        document.getElementById('footer-text').innerText = texts[currentLang].footer;
+        document.getElementById('lang-btn').innerText = texts[currentLang].btnLang;
+    }
+</script>
+
+</body>
+</html>
