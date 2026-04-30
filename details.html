@@ -4,14 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تفاصيل القوات والمعدات | SDAV</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #006c35;
+            --green-dark: #004d26;
+            --green-light: #e6f2ec;
+            --green-mid: #d0eadb;
+            --saudi-green: #006c35;
+            --white: #ffffff;
+            --light-bg: #f5f8f6;
+            --text-dark: #1e2d25;
+            --text-mid: #4a6357;
+            --text-soft: #8aa396;
+            --border: #dde8e3;
+            --shadow-sm: 0 2px 10px rgba(0,0,0,0.06);
+            --radius-pill: 50px;
+            --transition: .28s ease;
+            --font: 'Tajawal', sans-serif;
+            --overlay: rgba(0, 0, 0, 0.5);
+        }
+
+        body { margin: 0; font-family: var(--font); background-color: var(--light-bg); color: var(--text-dark); }
+
+        /* --- Header --- */
+        .main-header {
+            background: var(--white); padding: 14px 50px; display: flex;
+            justify-content: space-between; align-items: center;
+            box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border); gap: 20px;
+        }
+        .brand-right { display: flex; align-items: center; gap: 12px; }
+        .sdav-badge { background: var(--green); color: white; padding: 9px 14px; border-radius: 10px; font-weight: 800; font-size: .95rem; }
+        .brand-text h1 { font-size: .97rem; font-weight: 700; margin: 0; }
+        .nav-left { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; align-items: center; }
+        .nav-link {
+            text-decoration: none; font-weight: 700; font-size: .88rem; color: var(--text-mid);
+            padding: 8px 16px; border-radius: var(--radius-pill); transition: all var(--transition);
+        }
+        .nav-link:hover { background: var(--green-light); color: var(--green); }
+        .nav-link.active { background: var(--green); color: var(--white); }
+        .lang-btn { 
+            background: var(--light-bg); border: 1.5px solid var(--border); 
+            padding: 7px 16px; border-radius: var(--radius-pill); cursor: pointer;
+            font-family: var(--font); font-weight: 800; font-size: .82rem;
+        }
+
+        /* --- Hero --- */
+        .hero-banner { position: relative; height: 400px; display: flex; align-items: center; justify-content: center; overflow: hidden; color: white; text-align: center; }
+        .video-bg { position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; transform: translate(-50%, -50%); object-fit: cover; filter: brightness(0.4); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; padding: 20px; }
+        .hero-content h2 { font-size: 2.8rem; font-weight: 800; margin-bottom: 10px; }
+
+        /* --- Filters & Cards --- */
+        .filter-wrapper { text-align: center; margin: 30px 0; }
+        .filter-btn { background: var(--white); border: 2px solid var(--saudi-green); color: var(--saudi-green); padding: 8px 25px; border-radius: 50px; cursor: pointer; font-weight: 700; margin: 5px; transition: 0.3s; }
+        .filter-btn.active { background: var(--saudi-green); color: white; }
+
+        .force-info-card { display: none; background: var(--white); max-width: 1000px; margin: 20px auto; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-sm); animation: fadeIn 0.5s ease; }
+        .force-flex { display: flex; align-items: center; flex-wrap: wrap; }
+        .leader-img { width: 300px; height: 350px; object-fit: cover; }
+        .info-content { padding: 30px; flex: 1; }
+        .info-content h2 { color: var(--saudi-green); border-right: 5px solid var(--saudi-green); padding-right: 15px; }
+
+        .equipment-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; padding: 40px 50px; max-width: 1200px; margin: 0 auto; }
+        .card { background: var(--white); border-radius: 15px; padding: 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.03); border: 1px solid #eee; cursor: pointer; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); border-color: var(--green); }
+        .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
+
+        /* --- Modal --- */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--overlay); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: var(--white); width: 90%; max-width: 600px; border-radius: 20px; padding: 30px; position: relative; animation: zoomIn 0.3s ease; }
+        .close-modal { position: absolute; top: 20px; left: 20px; font-size: 24px; cursor: pointer; color: #999; }
+        .specs-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
+        .spec-box { background: #f8faf9; padding: 12px; border-radius: 10px; text-align: center; border: 1px solid #eee; }
+        .spec-box strong { display: block; color: var(--saudi-green); font-size: 0.8rem; }
+        .modal-footer-btn { background: var(--saudi-green); color: white; width: 100%; padding: 15px; border-radius: 10px; font-weight: 700; text-decoration: none; display: block; text-align: center; margin-top: 20px; }
+
+        /* --- Footer --- */
+        footer { background: var(--green-dark); color: white; padding: 40px 50px 20px; margin-top: 50px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { color: var(--green-mid); margin-bottom: 20px; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; }
+        .copyright { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 30px; font-size: 0.8rem; opacity: 0.6; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    </style>
 </head>
+<body>
+
 <header class="main-header">
     <div class="brand-right">
         <div class="sdav-badge">SDAV</div>
-        <div>
-            <h1 id="nav-logo" style="font-size: 1.1rem; color: var(--saudi-green); margin: 0;">منصة الاستعراض الدفاعي</h1>
+        <div class="brand-text">
+            <h1 id="nav-logo">منصة الاستعراض الدفاعي</h1>
             <p id="nav-sub" style="font-size: 0.7rem; color: #888; margin: 0;">Smart Defense Aviation Viewer</p>
         </div>
     </div>
@@ -22,6 +111,7 @@
         <li><button class="lang-btn" onclick="toggleLang()" id="lang-btn">English</button></li>
     </ul>
 </header>
+
 <section class="hero-banner">
     <video autoplay muted loop playsinline class="video-bg">
         <source src="images/hero-bg.mp4" type="video/mp4">
@@ -39,9 +129,11 @@
     <button class="filter-btn" onclick="updateView('sea')" id="f-sea">القوات البحرية</button>
 </div>
 
+<!-- Leaders Info Sections -->
 <div id="air-info" class="force-info-card">
     <div class="force-flex">
-<img src="https://www.almowaten.net/wp-content/uploads/2019/09/EFJo6flX4AIvNmH-e1569253061755.jpg" class="leader-img">        <div class="info-content">
+        <img src="https://www.almowaten.net/wp-content/uploads/2019/09/EFJo6flX4AIvNmH-e1569253061755.jpg" class="leader-img">
+        <div class="info-content">
             <h2 id="air-h2">القوات الجوية الملكية السعودية</h2>
             <p id="air-p">الدفاع عن أمن وسلامة أجواء المملكة وحمايتها من أي اعتداء.</p>
             <div class="leader-bio" id="air-l">قائد القوات الجوية: سمو الفريق الركن تركي بن بندر بن عبدالعزيز</div>
@@ -51,7 +143,8 @@
 
 <div id="land-info" class="force-info-card">
     <div class="force-flex">
-<img src="https://www.mod.gov.sa/ar/Ministry/Leaders/PublishingImages/%D8%B1%D8%A6%D9%8A%D8%B3%20%D8%A3%D8%B1%D9%83%D8%A7%D9%86%20%D8%A7%D9%84%D9%82%D9%88%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D8%B1%D9%8A%D8%A9.jpeg" class="leader-img">        <div class="info-content">
+        <img src="https://www.mod.gov.sa/ar/Ministry/Leaders/PublishingImages/%D8%B1%D8%A6%D9%8A%D8%B3%20%D8%A3%D8%B1%D9%83%D8%A7%D9%86%20%D8%A7%D9%84%D9%82%D9%88%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D8%B1%D9%8A%D8%A9.jpeg" class="leader-img">
+        <div class="info-content">
             <h2 id="land-h2">القوات البرية الملكية السعودية</h2>
             <p id="land-p">حماية أمن الوطن ومصالحه البرية من خلال قوة عسكرية ضاربة.</p>
             <div class="leader-bio" id="land-l">رئيس أركان القوات البرية: معالي الفريق الركن فهد بن سعود الجهني</div>
@@ -61,7 +154,8 @@
 
 <div id="sea-info" class="force-info-card">
     <div class="force-flex">
-<img src="https://mod.gov.sa/ar/Ministry/Leaders/PublishingImages/%D8%B1%D8%A6%D9%8A%D8%B3%20%D8%A3%D8%B1%D9%83%D8%A7%D9%86%20%D8%A7%D9%84%D9%82%D9%88%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D8%AD%D8%B1%D9%8A%D8%A9.jpg" class="leader-img">        <div class="info-content">
+        <img src="https://mod.gov.sa/ar/Ministry/Leaders/PublishingImages/%D8%B1%D8%A6%D9%8A%D8%B3%20%D8%A3%D8%B1%D9%83%D8%A7%D9%86%20%D8%A7%D9%84%D9%82%D9%88%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D8%AD%D8%B1%D9%8A%D8%A9.jpg" class="leader-img">
+        <div class="info-content">
             <h2 id="sea-h2">القوات البحرية الملكية السعودية</h2>
             <p id="sea-p">تأمين الحدود البحرية وحماية المياه الإقليمية للمملكة.</p>
             <div class="leader-bio" id="sea-l">رئيس أركان القوات البحرية: معالي الفريق الركن محمد بن عبدالرحمن الغريبي</div>
@@ -69,21 +163,16 @@
     </div>
 </div>
 
+<!-- Equipment Grid -->
 <div class="equipment-grid" id="grid">
     <div class="card air" onclick="openModal('f15')"><img src="images/F-15.webp"><h3 class="eq-n" data-id="f15">F-15 Eagle</h3><p class="eq-f" data-id="f15">القوات الجوية</p></div>
     <div class="card air" onclick="openModal('habob')"><img src="images/Habob.jpg"><h3 class="eq-n" data-id="habob">Habbob Drone</h3><p class="eq-f" data-id="habob">القوات الجوية</p></div>
-    <div class="card air" onclick="openModal('c130')"><img src="images/C-130.jpg"><h3 class="eq-n" data-id="c130">C-130 Hercules</h3><p class="eq-f" data-id="c130">القوات الجوية</p></div>
-    <div class="card air" onclick="openModal('patriot')"><img src="images/PAC-3.jpg"><h3 class="eq-n" data-id="patriot">Patriot PAC-3</h3><p class="eq-f" data-id="patriot">القوات الجوية</p></div>
     <div class="card land" onclick="openModal('heet')"><img src="images/HEET.webp"><h3 class="eq-n" data-id="heet">HEET Vehicle</h3><p class="eq-f" data-id="heet">القوات البرية</p></div>
-    <div class="card land" onclick="openModal('abrams')"><img src="images/M1A2.jpg"><h3 class="eq-n" data-id="abrams">M1A2 Abrams</h3><p class="eq-f" data-id="abrams">القوات البرية</p></div>
-    <div class="card land" onclick="openModal('bradley')"><img src="images/M2.jpg"><h3 class="eq-n" data-id="bradley">M2 Bradley</h3><p class="eq-f" data-id="bradley">القوات البرية</p></div>
-    <div class="card land" onclick="openModal('paladin')"><img src="images/M109.jpg"><h3 class="eq-n" data-id="paladin">M109 Paladin</h3><p class="eq-f" data-id="paladin">القوات البرية</p></div>
     <div class="card sea" onclick="openModal('hsi32')"><img src="images/HSI-32.jpg"><h3 class="eq-n" data-id="hsi32">HSI-32 Boat</h3><p class="eq-f" data-id="hsi32">القوات البحرية</p></div>
-    <div class="card sea" onclick="openModal('frigate')"><img src="images/F-2000.png"><h3 class="eq-n" data-id="frigate">Frigate F-2000</h3><p class="eq-f" data-id="frigate">القوات البحرية</p></div>
-    <div class="card sea" onclick="openModal('patrol')"><img src="images/Fast Patrol Boat.jpg"><h3 class="eq-n" data-id="patrol">Fast Patrol Boat</h3><p class="eq-f" data-id="patrol">القوات البحرية</p></div>
-    <div class="card sea" onclick="openModal('submarine')"><img src="images/Attack Submarine.webp"><h3 class="eq-n" data-id="submarine">Attack Submarine</h3><p class="eq-f" data-id="submarine">القوات البحرية</p></div>
+    <!-- أضف بقية البطاقات هنا بنفس النمط -->
 </div>
 
+<!-- Details Modal -->
 <div class="modal-overlay" id="modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal()">&times;</span>
@@ -91,13 +180,11 @@
         <div class="specs-container">
             <div class="spec-box"><strong id="lbl-speed">السرعة القصوى</strong><span id="m-speed"></span></div>
             <div class="spec-box"><strong id="lbl-range">المدى التشغيلي</strong><span id="m-range"></span></div>
-            <div class="spec-box"><strong id="lbl-ceiling">سقف التحليق</strong><span id="m-ceiling"></span></div>
             <div class="spec-box"><strong id="lbl-cat">التصنيف</strong><span id="m-cat"></span></div>
             <div class="spec-box"><strong id="lbl-year">سنة التشغيل</strong><span id="m-year"></span></div>
-            <div class="spec-box"><strong id="lbl-nat">الجنسية</strong><span>🇸🇦</span></div>
         </div>
-        <p id="m-desc" style="margin-top:20px; line-height:1.6;"></p>
-        <a href="bookingr.html" class="modal-footer-btn" id="m-btn">🗓️ احجز موعد</a>
+        <p id="m-desc" style="margin-top:20px; line-height:1.6; font-size: 0.9rem;"></p>
+        <a href="bookingr.html" class="modal-footer-btn" id="m-btn">🗓️ احجز موعد زيارة</a>
     </div>
 </div>
 
@@ -106,31 +193,100 @@
         <div class="footer-col">
             <h4 id="f-h1">خريطة الموقع</h4>
             <ul class="footer-links">
-                <li><a href="home.html" id="f-l1">الرئيسية</a></li>
-                <li><a href="details.html" id="f-l2">التفاصيل</a></li>
-                <li><a href="bookingr.html" id="f-l3">حجز زيارة</a></li>
+                <li><a href="home.html">الرئيسية</a></li>
+                <li><a href="details.html">التفاصيل</a></li>
+                <li><a href="bookingr.html">حجز زيارة</a></li>
             </ul>
         </div>
         <div class="footer-col">
             <h4 id="f-h2">فريق التطوير</h4>
             <ul class="footer-links">
-                <li><a href="bookingr.html"> Yara Khalid</a></li>
-                <li><a href="details.html">Sara Mesfer</a></li>
-                <li><a href="details.html">Aljazi Naje</a></li>
-                <li><a href="home.html">Hajar Fayz</a></li>
-                <li><a href="home.html"> Amna Saleh</a></li>
+                <li><a href="#">Yara Khalid</a></li>
+                <li><a href="#">Sara Mesfer</a></li>
+                <li><a href="#">Aljazi Naje</a></li>
+                <li><a href="#">Hajar Fayz</a></li>
+                <li><a href="#">Amna Saleh</a></li>
             </ul>
         </div>
         <div class="footer-col">
             <h4 id="f-h3">SDAV Platform</h4>
-            <p style="font-size: 0.8rem; line-height: 1.6;"><br>نظام ذكي متكامل لاستعراض المعدات والآليات العسكرية، يهدف لتعزيز الوعي بالقدرات الدفاعية الوطنية وتسهيل التواصل المباشر.</p>
+            <p style="font-size: 0.8rem; line-height: 1.6; opacity: 0.8;">نظام ذكي متكامل لاستعراض المعدات والآليات العسكرية، يهدف لتعزيز الوعي بالقدرات الدفاعية الوطنية وتسهيل التواصل المباشر.</p>
         </div>
     </div>
     <div class="copyright" id="copy-text">
         &copy; 2026 جميع الحقوق محفوظة لمنصة SDAV - YASHA
     </div>
 </footer>
+<script>
+    // 1. قاعدة البيانات (ضرورية جداً لكي تظهر التفاصيل)
+    const db = {
+        'f15': { 
+            ar: { n:'F-15 إيجل', f:'القوات الجوية', s:'2655 كم/س', r:'4630 كم', c:'30500 م', t:'مقاتلة', y:'1976', d:'مقاتلة تفوق جوي متطورة تعد العمود الفقري للقوات الجوية.' }, 
+            en: { n:'F-15 Eagle', f:'Air Force', s:'2655 km/h', r:'4630 km', c:'30500 m', t:'Fighter', y:'1976', d:'Advanced air superiority fighter.' } 
+        },
+        'habob': { 
+            ar: { n:'طائرة هبوب', f:'القوات الجوية', s:'250 كم/س', r:'1500 كم', c:'MALE', t:'درون قتالي', y:'2023', d:'طائرة مسيرة سعودية الصنع ذات مهام استطلاعية وقتالية.' }, 
+            en: { n:'Habob Drone', f:'Air Force', s:'250 km/h', r:'1500 km', c:'MALE', t:'UAV', y:'2023', d:'Saudi-made combat drone.' } 
+        },
+        'heet': { 
+            ar: { n:'عربة هيت', f:'القوات البرية', s:'110 كم/س', r:'600 كم', c:'-', t:'مدرعة 4x4', y:'2024', d:'مدرعة سعودية متطورة مصممة للعمليات الصحراوية.' }, 
+            en: { n:'HEET Vehicle', f:'Army', s:'110 km/h', r:'600 km', c:'-', t:'Armored 4x4', y:'2024', d:'Saudi-made armored vehicle.' } 
+        },
+        'hsi32': { 
+            ar: { n:'HSI-32', f:'القوات البحرية', s:'48 عقدة', r:'1200 ميل', c:'-', t:'زورق اعتراض', y:'2021', d:'زوارق اعتراض سريعة جداً لحماية المياه الإقليمية.' }, 
+            en: { n:'HSI-32 Boat', f:'Navy', s:'48 Knots', r:'1200 miles', c:'-', t:'Interceptor', y:'2021', d:'High-speed interceptor boats.' } 
+        }
+    };
 
-<script src="app.js"></script>
+    // 2. إدارة اللغة والترجمة
+    let isAr = localStorage.getItem('selectedLang') !== 'en'; 
+    let activeId = ''; // لتذكر أي كرت مفتوح عند تغيير اللغة
+
+
+    // 3. وظائف التحكم (الفتح، الإغلاق، الفلترة)
+    function updateView(cat) {
+        document.querySelectorAll('.force-info-card').forEach(el => el.style.display = 'none');
+        if(cat !== 'all') {
+            const infoEl = document.getElementById(cat + '-info');
+            if(infoEl) infoEl.style.display = 'block';
+        }
+        document.querySelectorAll('.card').forEach(c => {
+            c.style.display = (cat==='all' || c.classList.contains(cat)) ? 'block' : 'none';
+        });
+        // تحديث شكل الأزرار
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        if(event) event.currentTarget.classList.add('active');
+    }
+
+    function openModal(id) {
+        activeId = id;
+        const data = db[id][isAr?'ar':'en'];
+        document.getElementById('m-title').innerText = data.n;
+        document.getElementById('m-speed').innerText = data.s;
+        document.getElementById('m-range').innerText = data.r;
+        document.getElementById('m-cat').innerText = data.t;
+        document.getElementById('m-year').innerText = data.y;
+        document.getElementById('m-desc').innerText = data.d;
+        document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+        activeId = '';
+    }
+
+    function toggleLang() {
+        isAr = !isAr;
+        localStorage.setItem('selectedLang', isAr ? 'ar' : 'en');
+        applyAllTranslations();
+    }
+
+    document.addEventListener('DOMContentLoaded', applyAllTranslations);
+    
+    // إغلاق المودال عند الضغط خارجه
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('modal')) closeModal();
+    }
+</script>
 </body>
 </html>
