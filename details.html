@@ -106,9 +106,9 @@
         <a href="bookingr.html" class="modal-footer-btn" id="m-btn">🗓️ احجز موعد</a>
     </div>
 </div>
-
 <footer>
     <div class="footer-grid">
+
         <div class="footer-col">
             <h4 id="f-h1">خريطة الموقع</h4>
             <ul class="footer-links">
@@ -117,21 +117,27 @@
                 <li><a href="bookingr.html"><span id="f-l3">حجز زيارة</span></a></li>
             </ul>
         </div>
+
         <div class="footer-col">
             <h4 id="f-h2">فريق التطوير</h4>
             <ul class="footer-links">
-                <li><a href="bookingr.html">Yara Khalid</a></li>
-                <li><a href="details.html">Sara Mesfer</a></li>
-                <li><a href="details.html">Aljazi Naje</a></li>
-                <li><a href="home.html">Hajar Fayz</a></li>
-                <li><a href="home.html">Amna Saleh</a></li>
+                <li><a href="bookingr.html" id="dev-1">Yara Khalid</a></li>
+                <li><a href="details.html" id="dev-2">Sara Mesfer</a></li>
+                <li><a href="details.html" id="dev-3">Aljazi Naje</a></li>
+                <li><a href="home.html" id="dev-4">Hajar Fayz</a></li>
+                <li><a href="home.html" id="dev-5">Amna Saleh</a></li>
             </ul>
         </div>
+
         <div class="footer-col">
             <h4 id="f-h3">SDAV Platform</h4>
-            <p style="font-size: 0.8rem; line-height: 1.6;"><br>نظام ذكي متكامل لاستعراض المعدات والآليات العسكرية، يهدف لتعزيز الوعي بالقدرات الدفاعية الوطنية وتسهيل التواصل المباشر.</p>
+            <p id="system-desc" style="font-size:0.8rem; line-height:1.6;">
+                نظام ذكي متكامل لاستعراض المعدات والآليات العسكرية، يهدف لتعزيز الوعي بالقدرات الدفاعية الوطنية وتسهيل التواصل المباشر.
+            </p>
         </div>
+
     </div>
+
     <div class="copyright" id="copy-text">
         &copy; 2026 جميع الحقوق محفوظة لمنصة SDAV - YASHA
     </div>
@@ -151,7 +157,7 @@ const db = {
     'hsi32': { ar: { n: 'HSI-32', f: 'القوات البحرية', s: '48 عقدة', r: '1200 ميل', c: '-', t: 'زورق اعتراض', y: '2021', d: 'زوارق اعتراض سريعة مصنعة محلياً.' }, en: { n: 'HSI-32 Boat', f: 'Navy', s: '48 Knots', r: '1200 miles', c: '-', t: 'Interceptor', y: '2021', d: 'Locally manufactured fast boats.' } },
     'frigate': { ar: { n: 'فرقاطة F-2000', f: 'القوات البحرية', s: '25 عقدة', r: '7000 ميل', c: '-', t: 'فرقاطة', y: '1985', d: 'سفينة حربية متعددة المهام.' }, en: { n: 'Frigate F-2000', f: 'Navy', s: '25 Knots', r: '7000 miles', c: '-', t: 'Frigate', y: '1985', d: 'Multi-mission warship.' } },
     'patrol': { ar: { n: 'زوارق اعتراض', f: 'القوات البحرية', s: '43 عقدة', r: '800 ميل', c: '-', t: 'زوارق سريعة', y: '2020', d: 'زوارق حماية سواحل.' }, en: { n: 'Patrol Boat', f: 'Navy', s: '43 Knots', r: '800 miles', c: '-', t: 'Interceptor', y: '2020', d: 'Coastal protection boats.' } },
-    'submarine': { ar: { n: 'غواصة هجومية', f: 'القوات البحرية', s: '20 عقدة', r: '500 ميل', c: '400 م', t: 'غواصة', y: '2005', d: 'غواصة صامتة متطورة.' }, en: { n: 'Attack Submarine', f: 'Navy', s: '20 Knots', r: '500 miles', c: '400 m', t: 'Submarine', y: '2005', d: 'Advanced silent submarine.' } }
+     'submarine': { ar: { n: 'غواصة هجومية', f: 'القوات البحرية', s: '20 عقدة', r: '500 ميل', c: '400 م', t: 'غواصة', y: '2005', d: 'غواصة صامتة متطورة.' }, en: { n: 'Attack Submarine', f: 'Navy', s: '20 Knots', r: '500 miles', c: '400 m', t: 'Submarine', y: '2005', d: 'Advanced silent submarine.' } }
 };
 
 // 1. دالة تبديل اللغة
@@ -181,8 +187,22 @@ function applyLanguage(lang) {
             'hero-p': 'Our ultimate goal is to preserve the sovereignty and security of our nation.',
             'f-all': 'All', 'f-air': 'Air Force', 'f-land': 'Land Forces', 'f-sea': 'Navy',
             'lbl-speed': 'Max Speed', 'lbl-range': 'Range', 'lbl-ceiling': 'Ceiling',
-            'lbl-cat': 'Category', 'lbl-year': 'Year', 'lbl-nat': 'Origin', 'm-btn': '🗓️ Book Visit'
-        },
+            'lbl-cat': 'Category', 'lbl-year': 'Year', 'lbl-nat': 'Origin', 'm-btn': '🗓️ Book Visit',
+        "system-desc": "An integrated smart system for showcasing military equipment and military vehicles, designed to enhance awareness of national defense capabilities and facilitate direct communication." ,
+         "f-h1": "Site Map",
+    "f-h2": "Development Team",
+"f-h3": "SDAV Platform",
+    "f-l1": "Home",
+    "f-l2": "Details",
+    "f-l3": "Book Visit",
+
+    "dev-1": "Yara Khalid",
+    "dev-2": "Sara Mesfer",
+    "dev-3": "Aljazi Naje",
+    "dev-4": "Hajar Fayz",
+    "dev-5": "Amna Saleh",
+    "copy-text": "© 2026 All Rights Reserved - SDAV Platform - YASHA"
+    },
         'ar': {
             'nav-logo': 'منصة الاستعراض الدفاعي',
             'nav-1': 'الرئيسية', 'nav-2': 'التفاصيل', 'nav-3': 'حجز موعد',
@@ -190,7 +210,19 @@ function applyLanguage(lang) {
             'hero-p': 'غايتنا الأسمى هي حفظ سيادة وأمن وطننا ووحدته وحماية مقدساته.',
             'f-all': 'الكل', 'f-air': 'القوات الجوية', 'f-land': 'القوات البرية', 'f-sea': 'القوات البحرية',
             'lbl-speed': 'السرعة القصوى', 'lbl-range': 'المدى التشغيلي', 'lbl-ceiling': 'سقف التحليق',
-            'lbl-cat': 'التصنيف', 'lbl-year': 'سنة التشغيل', 'lbl-nat': 'الجنسية', 'm-btn': '🗓️ احجز موعد'
+            "system-desc": "نظام ذكي متكامل لاستعراض المعدات والآليات العسكرية، يهدف لتعزيز الوعي بالقدرات الدفاعية الوطنية وتسهيل التواصل المباشر.",
+            'lbl-cat': 'التصنيف', 'lbl-year': 'سنة التشغيل', 'lbl-nat': 'الجنسية', 'm-btn': '🗓️ احجز موعد',
+             "f-h1": "خريطة الموقع",
+    "f-h2": "فريق التطوير",
+    "f-h3": "منصة SDAV",
+    "f-l1": "الرئيسية",
+    "f-l2": "التفاصيل",
+    "f-l3": "حجز زيارة",
+    "dev-1": "Yara Khalid",
+    "dev-2": "Sara Mesfer",
+    "dev-3": "Aljazi Naje",
+    "dev-4": "Hajar Fayz",
+    "dev-5": "Amna Saleh"
         }
     };
 
@@ -256,6 +288,5 @@ window.onload = () => {
     applyLanguage(savedLang);
 };
 </script>
-<script src="app.js"></script>
 </body>
 </html>

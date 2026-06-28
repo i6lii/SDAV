@@ -921,9 +921,12 @@ const langTexts = {
         nav1: 'الرئيسية', nav2: 'التفاصيل', nav3: 'حجز موعد',
         langBtn: 'English',
         // Footer (shared)
-        fH1: 'خريطة الموقع', fH2: 'فريق التطوير', fH3: 'SDAV Platform',
+        fH3: "منصة SDAV",
+        fH1: 'خريطة الموقع', fH2: 'فريق التطوير',
         fL1: 'الرئيسية', fL2: 'التفاصيل', fL3: 'حجز زيارة',
         copyright: '© 2026 جميع الحقوق محفوظة لمنصة SDAV - YASHA',
+        systemDesc: "نظام ذكي متكامل لاستعراض المعدات والآليات العسكرية، يهدف لتعزيز الوعي بالقدرات الدفاعية الوطنية وتسهيل التواصل المباشر.",
+
         // Home page
         brandName: 'منصة الاستعراض الدفاعي',
         heroTitle: 'مستقبل الطيران الدفاعي الذكي',
@@ -962,12 +965,15 @@ const langTexts = {
         msgTitle: 'تم الحجز بنجاح!',
         msgBody: 'يرجى الاحتفاظ بتفاصيل الموعد الموضحة أدناه:',
         tName: 'الاسم', tForce: 'الجهة', tDate: 'التاريخ', tRef: 'رقم المرجع',
-        btnNew: 'حجز جديد'
+        btnNew: 'حجز جديد',
+        namePlaceholder: 'مثال: محمد سلمان عبدالعزيز'
     },
     en: {
+      fH3: "SDAV Platform",
         navLogo: 'Defense Exhibition Platform',
         nav1: 'Home', nav2: 'Details', nav3: 'Booking',
         langBtn: 'العربية',
+        systemDesc: "An integrated smart system for showcasing military equipment and vehicles, designed to enhance awareness of national defense capabilities and facilitate direct communication.",
         fH1: 'Sitemap', fH2: 'Development Team', fH3: 'SDAV Platform',
         fL1: 'Home', fL2: 'Details', fL3: 'Book Visit',
         copyright: '© 2026 All Rights Reserved - SDAV Platform - YASHA',
@@ -997,6 +1003,7 @@ const langTexts = {
         formTitle: 'Book a Visit Appointment',
         formDesc: 'Please fill in all required fields to ensure your request is processed.',
         lblName: 'Full Name', lblId: 'ID Number',
+
         lblPhone: 'Phone Number', lblEmail: 'Email Address',
         lblForce: 'Target Force', lblDate: 'Visit Date',
         optAir: 'Royal Saudi Air Force',
@@ -1006,10 +1013,10 @@ const langTexts = {
         msgTitle: 'Booking Successful!',
         msgBody: 'Please keep the appointment details shown below:',
         tName: 'Name', tForce: 'Force', tDate: 'Date', tRef: 'Reference ID',
-        btnNew: 'New Booking'
+        btnNew: 'New Booking',
+        namePlaceholder: 'Example: Mohammed Salman Abdulaziz'
     }
 };
-
 // Helper: set text if element exists
 function setText(id, text) {
     const el = document.getElementById(id);
@@ -1024,6 +1031,12 @@ function applyLang(lang) {
     const htmlEl = document.documentElement;
     htmlEl.dir  = isAr ? 'rtl' : 'ltr';
     htmlEl.lang = lang;
+    // Name input placeholder
+const nameInput = document.getElementById("name");
+if (nameInput) {
+    nameInput.placeholder = t.namePlaceholder;
+}
+setText('system-desc', t.systemDesc);
 
     // ── Shared nav (all pages use these IDs) ──
     setText('nav-logo',   t.navLogo);
@@ -1127,7 +1140,6 @@ function validateAndSubmit(e) {
     e.preventDefault();
     const lang = localStorage.getItem('sdav_lang') || 'ar';
     const isAr = lang === 'ar';
-
     const nameVal  = document.getElementById('name').value;
     const idVal    = document.getElementById('id-num').value;
     const phoneVal = document.getElementById('phone').value;
@@ -1151,4 +1163,14 @@ function validateAndSubmit(e) {
     document.getElementById('res-force').innerText = forceVal;
     document.getElementById('res-date').innerText  = dateVal;
     document.getElementById('res-ref').innerText   = 'SDAV-' + Math.floor(Math.random() * 90000 + 10000);
+}
+function slideGrid(direction) {
+    const grid = document.getElementById('grid'); // تأكد أن الـ id للشبكة هو grid
+    const scrollAmount = 320; // مقدار الإزاحة (عرض البطاقة تقريباً)
+    
+    // إذا كان الاتجاه 1 يتحرك لليمين، -1 لليسار
+    grid.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+    });
 }
